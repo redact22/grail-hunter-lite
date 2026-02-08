@@ -1,0 +1,21 @@
+{
+  "client": {
+    "sourceDir": "src",
+    "allowedEnvPrefixes": ["VITE_"],
+    "allowedBuiltInEnv": ["DEV", "PROD", "MODE", "BASE_URL", "SSR"],
+    "forbiddenPatterns": [
+      "process\\.env\\.",
+      "(?:import\\.meta\\.env|process\\.env)\\.GEMINI_API_KEY",
+      "(?:import\\.meta\\.env|process\\.env)\\.GOOGLE_API_KEY"
+    ]
+  },
+  "server": {
+    "functionsDir": "api",
+    "requiredEnvByFunction": {
+      "api/assistant.ts": ["GEMINI_API_KEY"],
+      "api/scan.ts": ["GEMINI_API_KEY"],
+      "api/stores.ts": ["GEMINI_API_KEY"],
+      "api/styling.ts": ["GEMINI_API_KEY"]
+    }
+  }
+}

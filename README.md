@@ -41,8 +41,8 @@ Grail Hunter is a forensic authentication tool for vintage fashion. Point your c
 # Install
 npm install
 
-# Set your Gemini API key
-echo "VITE_GEMINI_API_KEY=your-key-here" > .env
+# Set your Gemini API key for local development fallback only
+echo "VITE_GEMINI_API_KEY=your-key-here" > .env.local
 
 # Run development server
 npm run dev
@@ -53,6 +53,23 @@ npm test
 # Build for production
 npm run build
 ```
+
+
+## Environment Variables & Boundaries
+
+### Client (`src/**`)
+- ✅ Allowed: `import.meta.env.VITE_*` and Vite built-ins (`DEV`, `PROD`, `MODE`, `BASE_URL`, `SSR`).
+- ❌ Forbidden: `process.env.*`, `GEMINI_API_KEY`, or any non-`VITE_` secret reference in browser code.
+
+### Serverless functions (`/api/*`)
+- Required env var: `GEMINI_API_KEY`.
+- Server functions must read secrets from `process.env.*` only (never from `import.meta.env.*`).
+- Required declarations are tracked in `config/env-boundaries.json` and validated in CI.
+
+### CI enforcement
+- Run locally: `npm run check:env-boundaries`.
+- CI workflow: `.github/workflows/env-boundaries.yml` runs this check on pull requests and pushes to `main`.
+- Configure branch protection / rulesets to require the **Env Boundaries / Enforce env boundaries** status check before merge.
 
 ## Project Structure
 
