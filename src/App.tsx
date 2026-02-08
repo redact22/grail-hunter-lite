@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { safeLocalStorage } from '@mini-apps/sdk';
+import { safeLocalStorage } from './lib/safe-storage';
 import { Zap, Scan, Store, MessageCircle, MapPin } from 'lucide-react';
 import { isConfigured } from './services/geminiService';
 import { SAMPLE_ITEMS } from './constants';

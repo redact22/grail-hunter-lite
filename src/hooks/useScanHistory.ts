@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { safeLocalStorage } from '@mini-apps/sdk';
+import { safeLocalStorage } from '../lib/safe-storage';
 import type { IdentificationResult } from '../types';
 
 const STORAGE_KEY = 'grail-hunter-scan-history';

@@ -8,7 +8,7 @@ export const ToastOverlay: React.FC = () => {
   useEffect(() => {
     const timers = new Set<ReturnType<typeof setTimeout>>();
     const unsub1 = eventBus.on<Toast>(TOAST_SHOW, (toast) => {
-      setToasts((prev) => [...prev.slice(-2), toast]);
+      setToasts((prev) => [...prev.slice(-3), toast]);
       const timer = setTimeout(() => {
         timers.delete(timer);
         setToasts((prev) => prev.filter((t) => t.id !== toast.id));
@@ -32,7 +32,8 @@ export const ToastOverlay: React.FC = () => {
       {toasts.map((t) => (
         <div
           key={t.id}
-          className={`px-4 py-3 rounded-2xl border backdrop-blur-xl text-sm font-bold pointer-events-auto max-w-sm animate-[slideIn_0.3s_ease-out] ${
+          onClick={() => eventBus.emit(TOAST_HIDE, t.id)}
+          className={`px-4 py-3 rounded-2xl border backdrop-blur-xl text-sm font-bold pointer-events-auto max-w-sm cursor-pointer shadow-[0_12px_32px_rgba(0,0,0,0.35)] animate-[slideIn_0.3s_ease-out] ${
             t.variant === 'error'
               ? 'bg-red-500/20 border-red-500/40 text-red-300'
               : t.variant === 'achievement'
