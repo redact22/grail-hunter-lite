@@ -43,6 +43,27 @@ Real forensic data: The RN/WPL Dating module uses actual FTC Registration Number
 
 ---
 
+## THIRD-PARTY DISCLOSURE (non-Gemini)
+
+Use this section in Devpost to make compliance easy for judges.
+
+| Service / Asset | Where it is used | License / terms compliance note |
+|---|---|---|
+| **Vercel** | Hosting + HTTPS deployment for live demo | Deployed under Vercel platform terms; no restricted data processing beyond app runtime telemetry/logging. |
+| **React + React DOM** | Front-end app framework/runtime | Used under MIT license; copyright notices preserved via npm package metadata. |
+| **Tailwind CSS** | UI styling system | Used under MIT license; integrated as build-time CSS framework only. |
+| **Lucide React** | UI icon set | Used under ISC license; icons consumed as packaged React components. |
+| **Unsplash image URLs** | Demo/sample marketplace card images (`SAMPLE_ITEMS`) | Demo-only editorial imagery sourced from Unsplash CDN links; usage should follow Unsplash License and API/content guidelines (no standalone resale/redistribution of original photos). |
+| **FTC RN database (public records)** | RN/WPL dating + known brand RN lookup module | Uses U.S. FTC public registration identifiers as factual reference data; no claim of FTC endorsement. |
+| **Google Maps data (via Gemini Maps Grounding tool)** | Nearby stores discovery in Map tab | Results are shown with source links and used in-app for discovery; usage must comply with Google Maps/Google terms surfaced through Gemini grounding. |
+| **Google Search results (via Gemini Search Grounding tool)** | Intel chat citations and market context | Grounded responses include source attribution; usage follows Google/Gemini terms for grounded search output. |
+
+### Devpost short version (ready to paste)
+
+**Third-party disclosure (non-Gemini):** Hosted on **Vercel**; frontend built with **React**, **Tailwind CSS**, and **Lucide React** (MIT/ISC licensed OSS); sample market images are **Unsplash** links (used under Unsplash terms for demo/editorial display); RN lookup uses public **FTC RN** reference data (no FTC endorsement); nearby store/map and web intel are provided through Gemini grounding on **Google Maps/Search** with source attribution and compliance to applicable Google terms.
+
+---
+
 ## DEMO SCRIPT (3 minutes)
 
 ### 0:00-0:20 — Hook (Splash Screen)
