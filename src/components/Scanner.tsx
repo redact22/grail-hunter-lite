@@ -149,7 +149,7 @@ export const Scanner: React.FC<ScannerProps> = ({ onResult }) => {
                 aria-hidden="true"
               />
               <div className="relative w-24 h-24 rounded-[32px] bg-white/5 border border-white/10 flex items-center justify-center text-[#2BF3C0]">
-                <Zap size={48} />
+                <Zap size={48} aria-hidden="true" />
               </div>
             </div>
             <div className="space-y-4 w-full">
@@ -157,7 +157,7 @@ export const Scanner: React.FC<ScannerProps> = ({ onResult }) => {
                 onClick={startCamera}
                 className="hv-btn w-full py-5 bg-[#2BF3C0] text-black font-black uppercase tracking-widest text-xs rounded-2xl flex items-center justify-center gap-3 shadow-[0_10px_30px_rgba(43,243,192,0.3)] active:scale-95"
               >
-                <Camera size={20} /> Start Live Scan
+                <Camera size={20} aria-hidden="true" /> Start Live Scan
               </button>
               <div className="flex items-center gap-4">
                 <div className="h-px bg-white/10 flex-1" />
@@ -170,7 +170,7 @@ export const Scanner: React.FC<ScannerProps> = ({ onResult }) => {
                 onClick={() => fileInputRef.current?.click()}
                 className="hv-btn w-full py-5 border border-white/10 text-white font-black uppercase tracking-widest text-[10px] rounded-2xl active:scale-95"
               >
-                <Upload size={18} className="opacity-60" /> Upload Evidence
+                <Upload size={18} className="opacity-60" aria-hidden="true" /> Upload Evidence
               </button>
             </div>
             <input
@@ -186,14 +186,14 @@ export const Scanner: React.FC<ScannerProps> = ({ onResult }) => {
         {cameraMode && (
           <div className="absolute inset-0">
             <video ref={videoRef} autoPlay playsInline className="w-full h-full object-cover" />
-            <div className="absolute inset-12 border border-white/10 rounded-3xl pointer-events-none">
+            <div className="absolute inset-12 border border-white/10 rounded-3xl pointer-events-none" aria-hidden="true">
               <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-[#2BF3C0] -translate-x-1 -translate-y-1" />
               <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-[#2BF3C0] translate-x-1 -translate-y-1" />
               <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-[#2BF3C0] -translate-x-1 translate-y-1" />
               <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-[#2BF3C0] translate-x-1 translate-y-1" />
             </div>
             {/* Crosshair */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true">
               <div className="w-16 h-16 relative">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-4 bg-[#2BF3C0]/60" />
                 <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-px h-4 bg-[#2BF3C0]/60" />
@@ -229,6 +229,7 @@ export const Scanner: React.FC<ScannerProps> = ({ onResult }) => {
             />
             <div
               className="absolute inset-0 pointer-events-none"
+              aria-hidden="true"
               style={{
                 backgroundImage:
                   'linear-gradient(rgba(43,243,192,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(43,243,192,0.2) 1px, transparent 1px)',
@@ -259,7 +260,7 @@ export const Scanner: React.FC<ScannerProps> = ({ onResult }) => {
                 {/* Progress panel */}
                 <div className="absolute bottom-16 left-8 right-8 z-40 bg-black/60 border border-white/10 backdrop-blur-2xl p-5 rounded-3xl">
                   <div className="flex items-center gap-3 mb-3">
-                    <Activity size={14} className="text-[#2BF3C0] animate-pulse" />
+                    <Activity size={14} className="text-[#2BF3C0] animate-pulse" aria-hidden="true" />
                     <div className="flex-1">
                       <div className="flex justify-between items-center mb-1">
                         <span className="text-[10px] font-black text-white uppercase tracking-widest">

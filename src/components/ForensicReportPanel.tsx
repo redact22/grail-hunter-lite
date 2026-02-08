@@ -60,9 +60,9 @@ export const ForensicReportPanel: React.FC<ForensicReportPanelProps> = ({ result
               className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${result.isAuthentic ? 'bg-[#2BF3C0]/10 border border-[#2BF3C0]/30' : 'bg-red-500/10 border border-red-500/30'}`}
             >
               {result.isAuthentic ? (
-                <ShieldCheck size={16} className="text-[#2BF3C0]" />
+                <ShieldCheck size={16} className="text-[#2BF3C0]" aria-hidden="true" />
               ) : (
-                <ShieldX size={16} className="text-red-400" />
+                <ShieldX size={16} className="text-red-400" aria-hidden="true" />
               )}
               <span
                 className={`text-xs font-black uppercase tracking-widest ${result.isAuthentic ? 'text-[#2BF3C0]' : 'text-red-400'}`}
@@ -112,7 +112,7 @@ export const ForensicReportPanel: React.FC<ForensicReportPanelProps> = ({ result
             style={fadeUp(reveal, 800)}
           >
             <div className="flex items-center gap-2 text-red-400">
-              <AlertTriangle size={14} />
+              <AlertTriangle size={14} aria-hidden="true" />
               <span className="text-[10px] font-black uppercase tracking-widest">Red Flags</span>
             </div>
             {result.redFlags.map((flag, i) => (
@@ -198,14 +198,14 @@ export const ForensicReportPanel: React.FC<ForensicReportPanelProps> = ({ result
             disabled={audioPlaying}
             className="hv-btn flex-1 py-4 rounded-2xl bg-white/5 border border-white/10 text-white text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 active:scale-95 disabled:opacity-40"
           >
-            <Volume2 size={16} className={audioPlaying ? 'animate-pulse' : ''} />
+            <Volume2 size={16} className={audioPlaying ? 'animate-pulse' : ''} aria-hidden="true" />
             {audioPlaying ? 'Playing...' : 'Audio Brief'}
           </button>
           <button
             onClick={onReset}
             className="hv-btn flex-1 py-4 rounded-2xl bg-[#2BF3C0] text-black text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 active:scale-95"
           >
-            <RotateCcw size={16} />
+            <RotateCcw size={16} aria-hidden="true" />
             Scan Another
           </button>
         </div>
