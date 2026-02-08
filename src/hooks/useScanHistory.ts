@@ -5,6 +5,16 @@ import type { IdentificationResult } from '../types';
 const STORAGE_KEY = 'grail-hunter-scan-history';
 const MAX_ENTRIES = 20;
 
+function generateScanId(): string {
+  if (typeof globalThis.crypto?.randomUUID === 'function') {
+    return globalThis.crypto.randomUUID();
+  }
+
+  const timestamp = Date.now();
+  const randomSuffix = Math.random().toString(36).slice(2, 10);
+  return `scan-${timestamp}-${randomSuffix}`;
+}
+
 function loadHistory(): IdentificationResult[] {
   const raw = safeLocalStorage.getItem(STORAGE_KEY);
   if (!raw) return [];
@@ -20,7 +30,7 @@ export function useScanHistory() {
 
   const addScan = useCallback((result: IdentificationResult) => {
     setHistory((prev) => {
-      const next = [{ ...result, id: result.id ?? `scan-${Date.now()}` }, ...prev].slice(
+      const next = [{ ...result, id: result.id ?? generateScanId() }, ...prev].slice(
         0,
         MAX_ENTRIES
       );
