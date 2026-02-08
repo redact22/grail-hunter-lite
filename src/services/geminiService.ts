@@ -125,9 +125,9 @@ const SIMULATED_STYLING = {
 };
 
 const SIMULATED_STORES: NearbyStore[] = [
-  { name: 'Vintage Vault NYC', address: '123 Broadway', uri: '#' },
-  { name: 'Retro Revival', address: '456 Main St', uri: '#' },
-  { name: 'Thrift Paradise', address: '789 Oak Ave', uri: '#' },
+  { name: 'Vintage Vault NYC', address: '123 Broadway', uri: '' },
+  { name: 'Retro Revival', address: '456 Main St', uri: '' },
+  { name: 'Thrift Paradise', address: '789 Oak Ave', uri: '' },
 ];
 
 /* ─── Timeout helper (HIGH thinking can take 30s+) ─── */
@@ -204,7 +204,7 @@ Analyze this vintage/thrift item image thoroughly.`,
       }
       return parsed as IdentificationResult;
     } catch (err) {
-      console.warn('[GeminiService] Direct scan error:', err);
+      if (import.meta.env.DEV) console.warn('[GeminiService] Direct scan error:', err);
       return {
         ...SIMULATED_SCAN,
         name: 'Carhartt Detroit Jacket J97 c. 1995',
@@ -289,7 +289,7 @@ export const generateStylingAudio = async (text: string): Promise<string> => {
         return 'gemini-tts';
       }
     } catch {
-      console.warn('[GeminiService] Gemini TTS unavailable, falling back');
+      if (import.meta.env.DEV) console.warn('[GeminiService] Gemini TTS unavailable, falling back');
     }
   }
 
@@ -337,7 +337,7 @@ export const generateProductReel = async (item: GrailItem): Promise<string> => {
     const uri = operation.response?.generatedVideos?.[0]?.video?.uri;
     return uri ?? '';
   } catch (err) {
-    console.warn('[GeminiService] Veo error:', err);
+    if (import.meta.env.DEV) console.warn('[GeminiService] Veo error:', err);
     return '';
   }
 };
@@ -408,13 +408,13 @@ export const findNearbyDrops = async (lat: number, lng: number): Promise<NearbyS
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const maps = (chunk as any).maps;
           if (maps) {
-            stores.push({ name: maps.title || 'Unknown', address: '', uri: maps.uri || '#' });
+            stores.push({ name: maps.title || 'Unknown', address: '', uri: maps.uri || '' });
           }
         }
       }
       return stores.length > 0 ? stores : SIMULATED_STORES;
     } catch {
-      return [{ name: 'Vintage Vault', address: '123 Broadway', uri: '#' }];
+      return [{ name: 'Vintage Vault', address: '123 Broadway', uri: '' }];
     }
   }
 

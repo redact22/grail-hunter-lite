@@ -37,7 +37,7 @@
   <!-- Subtitle -->
   <text x="600" y="380" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="700" text-anchor="middle" fill="rgba(43,243,192,0.7)" letter-spacing="6">FORENSIC AUTHENTICATION</text>
   <!-- Bottom tagline -->
-  <text x="600" y="500" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" text-anchor="middle" fill="rgba(255,255,255,0.3)" letter-spacing="4">7 GEMINI APIs &#183; ONE APP</text>
+  <text x="600" y="500" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" text-anchor="middle" fill="rgba(255,255,255,0.3)" letter-spacing="4">5 GEMINI APIs &#183; ONE APP</text>
   <!-- Corner brackets -->
   <g stroke="#2BF3C0" stroke-width="2" fill="none" opacity="0.15">
     <path d="M40,40 L40,80 M40,40 L80,40"/>

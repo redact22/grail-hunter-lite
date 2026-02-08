@@ -6,7 +6,7 @@ import { NearbyStores } from '../NearbyStores';
 vi.mock('../../services/geminiService', () => ({
   findNearbyDrops: vi
     .fn()
-    .mockResolvedValue([{ name: 'Test Store', address: '123 Main', uri: '#' }]),
+    .mockResolvedValue([{ name: 'Test Store', address: '123 Main', uri: '' }]),
 }));
 
 // Mock geolocation

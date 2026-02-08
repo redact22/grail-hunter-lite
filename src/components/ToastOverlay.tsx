@@ -12,7 +12,7 @@ export const ToastOverlay: React.FC = () => {
       const timer = setTimeout(() => {
         timers.delete(timer);
         setToasts((prev) => prev.filter((t) => t.id !== toast.id));
-      }, toast.ttl ?? 4000);
+      }, toast.ttl ?? 3000);
       timers.add(timer);
     });
     const unsub2 = eventBus.on<string>(TOAST_HIDE, (id) => {
@@ -28,11 +28,11 @@ export const ToastOverlay: React.FC = () => {
   if (toasts.length === 0) return null;
 
   return (
-    <div className="fixed top-4 right-4 z-[100] flex flex-col gap-2 max-w-sm">
+    <div className="fixed top-4 left-4 right-4 z-[100] flex flex-col items-center gap-2 pointer-events-none">
       {toasts.map((t) => (
         <div
           key={t.id}
-          className={`px-4 py-3 rounded-2xl border backdrop-blur-xl text-sm font-bold animate-[slideIn_0.3s_ease-out] ${
+          className={`px-4 py-3 rounded-2xl border backdrop-blur-xl text-sm font-bold pointer-events-auto max-w-sm animate-[slideIn_0.3s_ease-out] ${
             t.variant === 'error'
               ? 'bg-red-500/20 border-red-500/40 text-red-300'
               : t.variant === 'achievement'

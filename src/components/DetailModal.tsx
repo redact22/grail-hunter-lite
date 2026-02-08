@@ -39,6 +39,7 @@ export const DetailModal: React.FC<DetailModalProps> = ({ item, onClose }) => {
     if (item) {
       setVideoUrl(null);
       setCondition(85);
+      setStylingAdvice(null);
       let cancelled = false;
       generateStylingAdvice(item)
         .then((data) => {

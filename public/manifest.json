@@ -1,7 +1,7 @@
 {
   "name": "GRAIL HUNTER — Forensic Authentication",
   "short_name": "Grail Hunter",
-  "description": "AI-powered vintage fashion authentication scanner. 7 Gemini APIs. One app.",
+  "description": "AI-powered vintage fashion authentication scanner. 5 Gemini APIs. One app.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0A0A0F",

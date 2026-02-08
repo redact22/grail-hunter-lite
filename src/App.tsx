@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { safeLocalStorage } from './lib/safe-storage';
+import { safeLocalStorage } from '@mini-apps/sdk';
 import { Zap, Scan, Store, MessageCircle, MapPin } from 'lucide-react';
 import { isConfigured } from './services/geminiService';
 import { SAMPLE_ITEMS } from './constants';
@@ -135,7 +135,7 @@ export const App: React.FC = () => {
       {/* Tab Bar */}
       <nav
         className="fixed bottom-0 left-0 right-0 z-50 bg-[#0A0A0F]/90 backdrop-blur-xl border-t border-white/5"
-        style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom, 0.5rem))' }}
+        style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom, 0.75rem))' }}
       >
         <div className="max-w-lg mx-auto flex relative">
           {/* Sliding indicator */}

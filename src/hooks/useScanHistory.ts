@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { safeLocalStorage } from '../lib/safe-storage';
+import { safeLocalStorage } from '@mini-apps/sdk';
 import type { IdentificationResult } from '../types';
 
 const STORAGE_KEY = 'grail-hunter-scan-history';
@@ -20,7 +20,7 @@ export function useScanHistory() {
 
   const addScan = useCallback((result: IdentificationResult) => {
     setHistory((prev) => {
-      const next = [{ ...result, id: result.id ?? `scan-${Date.now()}` }, ...prev].slice(
+      const next = [{ ...result, id: result.id ?? crypto.randomUUID() }, ...prev].slice(
         0,
         MAX_ENTRIES
       );
