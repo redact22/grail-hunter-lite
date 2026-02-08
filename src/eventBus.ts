@@ -32,7 +32,7 @@ export const emitToastShow = (options: {
   const toast: Toast = {
     id: `toast-${++toastCounter}`,
     ...options,
-    ttl: options.ttl ?? 4000,
+    ttl: options.ttl ?? (options.variant === 'achievement' ? 5000 : 3200),
   };
   eventBus.emit(TOAST_SHOW, toast);
 };
@@ -42,6 +42,6 @@ export const emitAchievement = (itemName: string): void => {
     variant: 'achievement',
     title: 'GRAIL FOUND!',
     message: `Authenticated: ${itemName}`,
-    ttl: 6000,
+    ttl: 5000,
   });
 };

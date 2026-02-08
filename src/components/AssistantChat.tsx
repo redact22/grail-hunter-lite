@@ -88,7 +88,7 @@ export const AssistantChat: React.FC = () => {
     <div className="max-w-lg mx-auto flex flex-col h-[60vh]">
       <div ref={scrollRef} className="flex-1 overflow-y-auto space-y-4 mb-4 no-scrollbar">
         {messages.length === 0 && (
-          <div className="text-center text-white/20 mt-16">
+          <div className="text-center text-white/30 mt-16">
             <MessageCircle size={48} className="mx-auto mb-4 opacity-40" aria-hidden="true" />
             <p className="text-sm font-bold mb-6">
               Ask about vintage fashion, market trends, or authentication...
@@ -98,7 +98,7 @@ export const AssistantChat: React.FC = () => {
                 <button
                   key={s}
                   onClick={() => handleSend(s)}
-                  className="hv-btn px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[11px] font-bold text-white/50 hover:text-white/80 hover:border-white/20 hover:scale-105 active:scale-95 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:outline-offset-2"
+                  className="hv-btn px-4 py-2 rounded-xl bg-white/5 border border-white/20 text-[11px] font-bold text-white/70 hover:text-white hover:border-white/30 hover:scale-105 active:scale-95 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:outline-offset-2"
                 >
                   {s}
                 </button>
@@ -154,7 +154,7 @@ export const AssistantChat: React.FC = () => {
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSend()}
           placeholder="Ask the intelligence network..."
-          className="flex-1 px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-[#2BF3C0]/40"
+          className="flex-1 px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-white text-sm placeholder:text-white/60 focus:outline-none focus:border-[#2BF3C0]/40"
         />
         <button
           onClick={() => handleSend()}

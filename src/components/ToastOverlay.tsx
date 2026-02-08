@@ -28,11 +28,12 @@ export const ToastOverlay: React.FC = () => {
   if (toasts.length === 0) return null;
 
   return (
-    <div className="fixed top-4 right-4 z-[100] flex flex-col gap-2 max-w-sm">
+    <div className="fixed top-4 right-3 sm:right-4 z-[100] flex flex-col gap-2 w-[min(calc(100vw-1.5rem),22rem)]">
       {toasts.map((t) => (
         <div
           key={t.id}
-          className={`px-4 py-3 rounded-2xl border backdrop-blur-xl text-sm font-bold animate-[slideIn_0.3s_ease-out] ${
+          onClick={() => setToasts((prev) => prev.filter((x) => x.id !== t.id))}
+          className={`px-4 py-3 rounded-2xl border backdrop-blur-xl text-sm font-bold animate-[slideIn_0.3s_ease-out] cursor-pointer ${
             t.variant === 'error'
               ? 'bg-red-500/20 border-red-500/40 text-red-300'
               : t.variant === 'achievement'
