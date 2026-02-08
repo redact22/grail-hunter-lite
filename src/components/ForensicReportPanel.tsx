@@ -196,14 +196,14 @@ export const ForensicReportPanel: React.FC<ForensicReportPanelProps> = ({ result
           <button
             onClick={handleAudioBriefing}
             disabled={audioPlaying}
-            className="hv-btn flex-1 py-4 rounded-2xl bg-white/5 border border-white/10 text-white text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 active:scale-95 disabled:opacity-40"
+            className="hv-btn flex-1 py-4 rounded-2xl bg-white/5 border border-white/10 text-white text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 active:scale-95 disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:outline-offset-2"
           >
             <Volume2 size={16} className={audioPlaying ? 'animate-pulse' : ''} aria-hidden="true" />
             {audioPlaying ? 'Playing...' : 'Audio Brief'}
           </button>
           <button
             onClick={onReset}
-            className="hv-btn flex-1 py-4 rounded-2xl bg-[#2BF3C0] text-black text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 active:scale-95"
+            className="hv-btn flex-1 py-4 rounded-2xl bg-[#2BF3C0] text-black text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:outline-offset-2"
           >
             <RotateCcw size={16} aria-hidden="true" />
             Scan Another

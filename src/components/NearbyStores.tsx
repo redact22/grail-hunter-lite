@@ -68,7 +68,7 @@ export const NearbyStores: React.FC = () => {
             href={s.uri}
             target="_blank"
             rel="noopener noreferrer"
-            className="block p-5 rounded-2xl bg-white/[0.03] border border-white/5 hover:bg-white/[0.08] transition-all"
+            className="block p-5 rounded-2xl bg-white/[0.03] border border-white/5 hover:bg-white/[0.08] transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:outline-offset-2"
           >
             <div className="flex items-center gap-3">
               <Store size={18} className="text-[#2BF3C0]" aria-hidden="true" />
