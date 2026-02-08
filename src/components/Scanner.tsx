@@ -155,7 +155,7 @@ export const Scanner: React.FC<ScannerProps> = ({ onResult }) => {
             <div className="space-y-4 w-full">
               <button
                 onClick={startCamera}
-                className="hv-btn w-full py-5 bg-[#2BF3C0] text-black font-black uppercase tracking-widest text-xs rounded-2xl flex items-center justify-center gap-3 shadow-[0_10px_30px_rgba(43,243,192,0.3)] active:scale-95"
+                className="hv-btn w-full py-5 bg-[#2BF3C0] text-black font-black uppercase tracking-widest text-xs rounded-2xl flex items-center justify-center gap-3 shadow-[0_10px_30px_rgba(43,243,192,0.3)] active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:-outline-offset-2"
               >
                 <Camera size={20} /> Start Live Scan
               </button>
@@ -168,7 +168,7 @@ export const Scanner: React.FC<ScannerProps> = ({ onResult }) => {
               </div>
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="hv-btn w-full py-5 border border-white/10 text-white font-black uppercase tracking-widest text-[10px] rounded-2xl active:scale-95"
+                className="hv-btn w-full py-5 border border-white/10 text-white font-black uppercase tracking-widest text-[10px] rounded-2xl active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:-outline-offset-2"
               >
                 <Upload size={18} className="opacity-60" /> Upload Evidence
               </button>
@@ -206,14 +206,14 @@ export const Scanner: React.FC<ScannerProps> = ({ onResult }) => {
               <button
                 onClick={captureFrame}
                 aria-label="Capture photo"
-                className="hv-btn w-24 h-24 rounded-full border-4 border-white p-1 active:scale-95 pointer-events-auto bg-transparent"
+                className="hv-btn w-24 h-24 rounded-full border-4 border-white p-1 active:scale-95 pointer-events-auto bg-transparent focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:-outline-offset-2"
               >
                 <div className="w-full h-full rounded-full bg-white" />
               </button>
             </div>
             <button
               onClick={reset}
-              className="hv-btn absolute top-8 left-8 px-5 py-3 rounded-2xl bg-black/60 border border-white/10 text-white font-black text-[10px] uppercase tracking-widest active:scale-95"
+              className="hv-btn absolute top-8 left-8 px-5 py-3 rounded-2xl bg-black/60 border border-white/10 text-white font-black text-[10px] uppercase tracking-widest active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:-outline-offset-2"
             >
               Abort
             </button>

@@ -98,7 +98,7 @@ export const AssistantChat: React.FC = () => {
                 <button
                   key={s}
                   onClick={() => handleSend(s)}
-                  className="hv-btn px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[11px] font-bold text-white/50 hover:text-white/80 hover:border-white/20 hover:scale-105 active:scale-95 transition-all"
+                  className="hv-btn px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[11px] font-bold text-white/50 hover:text-white/80 hover:border-white/20 hover:scale-105 active:scale-95 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:outline-offset-2"
                 >
                   {s}
                 </button>
@@ -120,7 +120,7 @@ export const AssistantChat: React.FC = () => {
                       href={l.uri}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[10px] font-bold text-[#9B7BFF] underline flex items-center gap-1"
+                      className="text-[10px] font-bold text-[#9B7BFF] underline flex items-center gap-1 rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:outline-offset-2"
                     >
                       <ExternalLink size={10} />
                       {l.title}
@@ -160,7 +160,7 @@ export const AssistantChat: React.FC = () => {
           onClick={() => handleSend()}
           disabled={loading}
           aria-label="Send message"
-          className="hv-btn px-5 py-4 bg-[#2BF3C0] text-black rounded-2xl font-black active:scale-95 disabled:opacity-50"
+          className="hv-btn px-5 py-4 bg-[#2BF3C0] text-black rounded-2xl font-black active:scale-95 disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:outline-offset-2"
         >
           <Send size={20} />
         </button>
