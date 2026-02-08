@@ -1,0 +1,233 @@
+/**
+ * HALSTON ANIMATIONS - CSS-based replacements for framer-motion
+ * Smooth, performant animations using CSS only
+ */
+
+/* ============================================
+   FADE IN ANIMATIONS
+   ============================================ */
+
+.halston-fade-in {
+  animation: halstonFadeIn 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.halston-fade-in--delay {
+  animation-delay: 0.1s;
+}
+
+@keyframes halstonFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   FADE IN UP
+   ============================================ */
+
+.halston-fade-in-up {
+  animation: halstonFadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes halstonFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   FADE IN SCALE
+   ============================================ */
+
+.halston-fade-in-scale {
+  animation: halstonFadeInScale 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes halstonFadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ============================================
+   SLIDE IN LEFT
+   ============================================ */
+
+.halston-slide-in-left {
+  animation: halstonSlideInLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes halstonSlideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ============================================
+   SLIDE IN UP
+   ============================================ */
+
+.halston-slide-in-up {
+  animation: halstonSlideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes halstonSlideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   FLOAT ANIMATION
+   ============================================ */
+
+.halston-float {
+  animation: halstonFloat 6s ease-in-out infinite;
+}
+
+@keyframes halstonFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ============================================
+   INTERSECTION OBSERVER TRIGGER
+   ============================================ */
+
+.halston-fade-in-up[data-in-view='false'] {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.halston-fade-in-up[data-in-view='true'] {
+  animation: halstonFadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ============================================
+   BADGE POP
+   ============================================ */
+
+.halston-badge-pop {
+  animation: halstonBadgePop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes halstonBadgePop {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* ============================================
+   PULSE ANIMATION
+   ============================================ */
+
+.halston-pulse {
+  animation: halstonPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes halstonPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/* ============================================
+   BACKGROUND ANIMATE
+   ============================================ */
+
+.halston-bg-animate {
+  animation: halstonBgAnimate 20s ease-in-out infinite;
+  background-position: 0% 0%;
+}
+
+@keyframes halstonBgAnimate {
+  0%,
+  100% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+}
+
+/* ============================================
+   CONFETTI
+   ============================================ */
+
+.halston-confetti {
+  animation: halstonConfetti 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes halstonConfetti {
+  0% {
+    opacity: 1;
+    transform: scale(0) translate(0, 0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) translate(var(--confetti-x, 0), var(--confetti-y, 0));
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0) translate(var(--confetti-x, 0), var(--confetti-y, 0));
+  }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .halston-fade-in,
+  .halston-fade-in-up,
+  .halston-fade-in-scale,
+  .halston-slide-in-left,
+  .halston-slide-in-up,
+  .halston-float,
+  .halston-badge-pop {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,79 @@
+/**
+ * GRAIL HUNTER LITE — App-specific keyframe animations
+ * Extracted from inline styles + new cinematic effects
+ */
+
+/* Scanner sweep line */
+@keyframes scanline {
+  0%,
+  100% {
+    top: 0%;
+  }
+  50% {
+    top: 100%;
+  }
+}
+
+/* Toast / notification slide-in */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* MarketTicker infinite scroll (CSS-only 60fps) */
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* CinematicSplash scanline sweep */
+.cinematic-scanline {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 163, 0.015) 2px,
+    rgba(0, 255, 163, 0.015) 4px
+  );
+  animation: cinematicScanlineSweep 8s linear infinite;
+}
+
+/* CinematicSplash CTA pulse ring */
+.cinematic-pulse-btn {
+  animation: cinematicPulseBtn 2s ease-out 3.5s infinite;
+}
+
+@keyframes cinematicScanlineSweep {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes cinematicPulseBtn {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 255, 163, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0 12px rgba(0, 255, 163, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-scanline,
+  .cinematic-pulse-btn {
+    animation-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,295 @@
+/**
+ * HIGH-VELOCITY MICRO-INTERACTIONS
+ * Global utility classes for 60fps cinematic UI
+ *
+ * Usage: Import in main.tsx or any component
+ * Classes: hv-btn, hover-lift, gpu-layer, stagger-children, etc.
+ */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   GPU ACCELERATION LAYER
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.gpu-layer {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HIGH-VELOCITY BUTTON SYSTEM
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.hv-btn {
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+  will-change: transform, box-shadow;
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.hv-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.1),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.hv-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.hv-btn:hover::after {
+  opacity: 1;
+}
+
+.hv-btn:active {
+  transform: translateY(0) scale(0.98);
+  transition-duration: 0.1s;
+}
+
+.hv-btn:disabled {
+  transform: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.hv-btn:disabled::after {
+  display: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HOVER LIFT EFFECT
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.hover-lift {
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease;
+  will-change: transform, box-shadow;
+}
+
+.hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    0 12px 24px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   STAGGERED REVEAL ANIMATION
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: stagger-fade-in 0.6s ease forwards;
+}
+
+.stagger-children > *:nth-child(1) {
+  animation-delay: 0ms;
+}
+.stagger-children > *:nth-child(2) {
+  animation-delay: 60ms;
+}
+.stagger-children > *:nth-child(3) {
+  animation-delay: 120ms;
+}
+.stagger-children > *:nth-child(4) {
+  animation-delay: 180ms;
+}
+.stagger-children > *:nth-child(5) {
+  animation-delay: 240ms;
+}
+.stagger-children > *:nth-child(6) {
+  animation-delay: 300ms;
+}
+.stagger-children > *:nth-child(7) {
+  animation-delay: 360ms;
+}
+.stagger-children > *:nth-child(8) {
+  animation-delay: 420ms;
+}
+
+@keyframes stagger-fade-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SHIMMER LOADING STATE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    rgba(255, 255, 255, 0.06) 50%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-slide 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer-slide {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PULSE INDICATORS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.pulse-indicator {
+  position: relative;
+}
+
+.pulse-indicator::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.4;
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   GLOW EFFECTS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.glow-cyan {
+  box-shadow: 0 0 20px rgba(43, 243, 192, 0.3);
+}
+
+.glow-purple {
+  box-shadow: 0 0 20px rgba(155, 123, 255, 0.3);
+}
+
+.glow-gold {
+  box-shadow: 0 0 20px rgba(255, 176, 32, 0.3);
+}
+
+.glow-text-cyan {
+  text-shadow:
+    0 0 20px rgba(43, 243, 192, 0.4),
+    0 0 40px rgba(43, 243, 192, 0.2);
+}
+
+.glow-text-purple {
+  text-shadow:
+    0 0 20px rgba(155, 123, 255, 0.4),
+    0 0 40px rgba(155, 123, 255, 0.2);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CARD HOVER EFFECTS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.card-hover {
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, box-shadow, border-color;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(43, 243, 192, 0.2);
+  box-shadow:
+    0 0 0 1px rgba(43, 243, 192, 0.1),
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TRANSITION UTILITIES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.transition-fast {
+  transition: all 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.transition-normal {
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.transition-slow {
+  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FOCUS STATES (ACCESSIBILITY)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.hv-btn:focus-visible,
+.hover-lift:focus-visible,
+.card-hover:focus-visible {
+  outline: 2px solid #2bf3c0;
+  outline-offset: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PRINT STYLES (DISABLE ANIMATIONS)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media print {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   REDUCED MOTION (ACCESSIBILITY)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
