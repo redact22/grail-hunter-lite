@@ -13,6 +13,10 @@
 - [ ] **Test production URL on mobile** → verify camera scan works
 - [ ] **Verify Deployment Protection is OFF** → Vercel Dashboard > Settings > Deployment Protection
 
+## RULES COMPLIANCE STATEMENT
+
+GRAIL HUNTER was newly created during the hackathon contest period and is submitted as original work, not a modification, fork, or continuation of a pre-existing app built before the competition window. Any reused open-source libraries are standard third-party dependencies, and all original app logic, UX design, Gemini API integrations, and product implementation for this submission were created during the contest window.
+
 ---
 
 ## LINKS (copy-paste ready)
