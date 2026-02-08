@@ -8,6 +8,11 @@
 
 ## SUBMISSION CHECKLIST
 
+- [ ] **Eligibility Gate (mandatory, confirm before submitting)**
+  - [ ] I am of legal age to participate in my jurisdiction.
+  - [ ] I am not in a restricted residency/sanctioned region per contest rules.
+  - [ ] I have no ineligible affiliations listed by the contest rules.
+  - [ ] If submitting as a team: all team members are added in Devpost Project Members and each member is individually eligible.
 - [ ] **Record 3-min demo video** → Upload to YouTube (unlisted OK)
 - [ ] **Submit on DevPost** → gemini3.devpost.com
 - [ ] **Test production URL on mobile** → verify camera scan works
