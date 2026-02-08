@@ -117,6 +117,6 @@ Analyze this vintage/thrift item image thoroughly.`,
     return res.status(200).json(parsed);
   } catch (err: any) {
     console.error('[/api/scan] Error:', err?.message || err);
-    return res.status(500).json({ error: 'Scan failed', detail: err?.message });
+    return res.status(500).json({ error: 'Scan failed' });
   }
 }

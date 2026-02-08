@@ -55,6 +55,6 @@ export default async function handler(req: any, res: any) {
     return res.status(200).json({ text, links });
   } catch (err: any) {
     console.error('[/api/assistant] Error:', err?.message || err);
-    return res.status(500).json({ error: 'Assistant failed', detail: err?.message });
+    return res.status(500).json({ error: 'Assistant failed' });
   }
 }

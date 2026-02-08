@@ -10,22 +10,33 @@ interface ChatMessage {
   links?: GroundingLink[];
 }
 
+/** Escape HTML entities to prevent XSS from AI responses */
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 /** Lightweight markdown-to-HTML for Gemini chat responses (no dependencies). */
 function renderMarkdown(md: string): string {
   return md
     .split('\n')
     .map((line) => {
+      const safe = escapeHtml(line);
       // Headings
-      if (line.startsWith('### ')) return `<p class="font-black text-white text-xs uppercase tracking-wider mt-3 mb-1">${line.slice(4)}</p>`;
-      if (line.startsWith('## ')) return `<p class="font-black text-white text-sm uppercase tracking-wider mt-3 mb-1">${line.slice(3)}</p>`;
-      if (line.startsWith('# ')) return `<p class="font-black text-white text-base uppercase tracking-wider mt-3 mb-1">${line.slice(2)}</p>`;
+      if (line.startsWith('### ')) return `<p class="font-black text-white text-xs uppercase tracking-wider mt-3 mb-1">${escapeHtml(line.slice(4))}</p>`;
+      if (line.startsWith('## ')) return `<p class="font-black text-white text-sm uppercase tracking-wider mt-3 mb-1">${escapeHtml(line.slice(3))}</p>`;
+      if (line.startsWith('# ')) return `<p class="font-black text-white text-base uppercase tracking-wider mt-3 mb-1">${escapeHtml(line.slice(2))}</p>`;
       // Bullet lists
       if (/^[-*]\s/.test(line)) return `<p class="pl-3 before:content-['•'] before:mr-2 before:text-[#2BF3C0]/60">${inlineMarkdown(line.slice(2))}</p>`;
       // Numbered lists
       const numMatch = line.match(/^(\d+)\.\s(.*)/);
       if (numMatch) return `<p class="pl-3"><span class="text-[#2BF3C0]/60 mr-2">${numMatch[1]}.</span>${inlineMarkdown(numMatch[2])}</p>`;
       // Empty lines
-      if (!line.trim()) return '<p class="h-2"></p>';
+      if (!safe.trim()) return '<p class="h-2"></p>';
       // Regular paragraphs
       return `<p>${inlineMarkdown(line)}</p>`;
     })
@@ -33,7 +44,8 @@ function renderMarkdown(md: string): string {
 }
 
 function inlineMarkdown(text: string): string {
-  return text
+  const safe = escapeHtml(text);
+  return safe
     .replace(/\*\*(.+?)\*\*/g, '<strong class="text-white font-bold">$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
     .replace(/`(.+?)`/g, '<code class="px-1.5 py-0.5 bg-white/10 rounded text-[#2BF3C0] text-[11px] font-mono">$1</code>');

@@ -48,6 +48,6 @@ export default async function handler(req: any, res: any) {
     return res.status(200).json(parsed);
   } catch (err: any) {
     console.error('[/api/styling] Error:', err?.message || err);
-    return res.status(500).json({ error: 'Styling generation failed', detail: err?.message });
+    return res.status(500).json({ error: 'Styling generation failed' });
   }
 }

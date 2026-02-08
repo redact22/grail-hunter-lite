@@ -21,7 +21,7 @@
 
 **Action:** Click "ENTER THE VAULT"
 
-**Say:** _"Grail Hunter is an AI-powered vintage fashion authentication scanner. It uses seven Gemini APIs in one app. Let me show you."_
+**Say:** _"Grail Hunter is an AI-powered vintage fashion authentication scanner. It uses five Gemini APIs in one app. Let me show you."_
 
 ---
 
@@ -84,7 +84,7 @@
 
 ### 2:50–3:00 — CLOSE: The Pitch
 
-**Say:** _"Seven Gemini APIs — Vision, Search grounding, Maps grounding, TTS, Veo, Structured output, and Extended thinking. One app. Built for the thrift economy."_
+**Say:** _"Five Gemini APIs — Vision, Search grounding, Maps grounding, TTS, and Veo. One app. Built for the thrift economy."_
 
 ---
 
@@ -125,5 +125,5 @@
 
 - _"The RN dating formula is a real forensic technique — it's not AI-generated, it's textile science."_
 - _"Extended thinking means the model shows its work — judges can see the reasoning, not just the answer."_
-- _"Seven APIs, zero page reloads. It's a single-page app with 341KB bundle."_
+- _"Five APIs, zero page reloads. It's a single-page app with 341KB bundle."_
 - _"The gamification layer creates stickiness — users come back to unlock badges and track their scan history."_
