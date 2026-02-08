@@ -8,6 +8,11 @@
   --obsidian-950: #0a0a0f;
 }
 
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 body {
   background: var(--obsidian-950);
   color: white;

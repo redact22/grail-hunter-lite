@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   X,
   Fingerprint,
@@ -9,26 +9,48 @@ import {
   Loader2,
   Share2,
   Volume2,
+  Scan,
 } from 'lucide-react';
 import {
   generateStylingAdvice,
   generateStylingAudio,
   generateProductReel,
+  identifyGrail,
 } from '../services/geminiService';
 import { emitToastShow } from '../eventBus';
+import { playScanStart, playScanComplete, playError } from '../lib/sounds';
 import { conditionMultiplier, conditionLabel, rarityColors } from '../constants';
-import type { GrailItem } from '../types';
+import { ForensicReportPanel } from './ForensicReportPanel';
+import type { GrailItem, IdentificationResult } from '../types';
 
 export interface DetailModalProps {
   item: GrailItem | null;
   onClose: () => void;
 }
 
+/** Fetch an image URL and convert to base64 via offscreen canvas */
+const imageUrlToBase64 = (url: string): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      canvas.getContext('2d')?.drawImage(img, 0, 0);
+      resolve(canvas.toDataURL('image/jpeg', 0.85));
+    };
+    img.onerror = () => reject(new Error('Image load failed'));
+    img.src = url;
+  });
+
 export const DetailModal: React.FC<DetailModalProps> = ({ item, onClose }) => {
   const [condition, setCondition] = useState(85);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
+  const [scanResult, setScanResult] = useState<IdentificationResult | null>(null);
+  const [isScanning, setIsScanning] = useState(false);
   const [stylingAdvice, setStylingAdvice] = useState<{
     advice: string;
     pairings: string[];
@@ -40,6 +62,8 @@ export const DetailModal: React.FC<DetailModalProps> = ({ item, onClose }) => {
       setVideoUrl(null);
       setCondition(85);
       setStylingAdvice(null);
+      setScanResult(null);
+      setIsScanning(false);
       let cancelled = false;
       generateStylingAdvice(item)
         .then((data) => {
@@ -121,6 +145,25 @@ export const DetailModal: React.FC<DetailModalProps> = ({ item, onClose }) => {
         .catch(() => {});
     }
   };
+
+  const handleForensicScan = useCallback(async () => {
+    if (!item || isScanning) return;
+    setIsScanning(true);
+    playScanStart();
+    emitToastShow({ variant: 'info', title: 'Forensic Scan', message: 'Analyzing item...', ttl: 3000 });
+    try {
+      const base64 = await imageUrlToBase64(item.imageUrl);
+      const result = await identifyGrail(base64);
+      navigator.vibrate?.(200);
+      playScanComplete();
+      setScanResult(result);
+    } catch {
+      playError();
+      emitToastShow({ variant: 'error', title: 'Scan Failed', message: 'Could not analyze image.' });
+    } finally {
+      setIsScanning(false);
+    }
+  }, [item, isScanning]);
 
   return (
     <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4">
@@ -328,25 +371,42 @@ export const DetailModal: React.FC<DetailModalProps> = ({ item, onClose }) => {
         >
           <div className="flex gap-3">
             <button
+              onClick={handleForensicScan}
+              disabled={isScanning}
+              className="hv-btn flex-1 py-4 min-h-[52px] bg-[#2BF3C0] text-black font-black uppercase rounded-2xl flex items-center justify-center gap-2 text-[11px] disabled:opacity-50 active:scale-95 shadow-[0_4px_20px_rgba(43,243,192,0.3)]"
+            >
+              {isScanning ? (
+                <Loader2 size={16} className="animate-spin" />
+              ) : (
+                <Scan size={16} />
+              )}{' '}
+              {isScanning ? 'Scanning...' : 'Forensic Scan'}
+            </button>
+            <button
               onClick={handleAudio}
               disabled={isPlayingAudio}
-              className="hv-btn flex-1 py-4 min-h-[52px] bg-[#2BF3C0]/10 border border-[#2BF3C0]/30 text-[#2BF3C0] font-black uppercase rounded-2xl flex items-center justify-center gap-2 text-[11px] disabled:opacity-50"
+              className="hv-btn py-4 px-4 min-h-[52px] min-w-[52px] bg-[#2BF3C0]/10 border border-[#2BF3C0]/30 text-[#2BF3C0] font-black uppercase rounded-2xl flex items-center justify-center disabled:opacity-50"
             >
               {isPlayingAudio ? (
                 <Loader2 size={16} className="animate-spin" />
               ) : (
                 <Volume2 size={16} />
-              )}{' '}
-              Briefing
+              )}
             </button>
             <button
               onClick={handleShare}
-              className="hv-btn flex-1 py-4 min-h-[52px] bg-white/5 border border-white/10 text-white font-black uppercase rounded-2xl flex items-center justify-center gap-2 text-[11px]"
+              className="hv-btn py-4 px-4 min-h-[52px] min-w-[52px] bg-white/5 border border-white/10 text-white font-black uppercase rounded-2xl flex items-center justify-center"
             >
-              <Share2 size={16} /> Share
+              <Share2 size={16} />
             </button>
           </div>
         </div>
+        {/* Forensic Report Overlay */}
+        {scanResult && (
+          <div className="absolute inset-0 z-[70]">
+            <ForensicReportPanel result={scanResult} onReset={() => setScanResult(null)} />
+          </div>
+        )}
       </div>
     </div>
   );

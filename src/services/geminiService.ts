@@ -106,7 +106,7 @@ const SIMULATED_SCAN: IdentificationResult = {
     'Phase 1: Visual Thought Signature — Hand-rolled hems with 12 SPI chain stitch detected. Selvage edges intact, indicating pre-industrial cut. Fabric drape consistent with single-ply charmeuse silk (19mm weight). ' +
     'Phase 2: Taxonomy Analysis — Label typography matches Halston 1971-1976 mainline. RN# 42850 cross-referenced against FTC database: registered to Halston Enterprises Inc., active 1968-1990. Union label ILGWU present (pre-1995). ' +
     "Phase 3: Market Delta — Comparable sales: Christie's 2024 lot #447 ($2,100), Grailed #HLS-9927 ($1,650 NWOT), The RealReal avg caftan price $890. This specimen rates 95th percentile due to museum-grade condition and provenance markers. " +
-    'Phase 4: Authentication Verdict — AUTHENTIC with high confidence. Zero red flags detected. All 7 authentication checkpoints passed: label, stitching, fabric, hardware, construction, era-dating, brand-specific markers.',
+    'Phase 4: Authentication Verdict — AUTHENTIC with high confidence. Zero red flags detected. All 7 forensic checkpoints passed: label, stitching, fabric, hardware, construction, era-dating, brand-specific markers.',
   redFlags: [],
   authenticationNotes:
     'Museum quality piece. Original silk weight confirmed at ~19mm. Care label intact with period-correct washing symbols. No evidence of alteration, repair, or reproduction.',

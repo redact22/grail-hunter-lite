@@ -15,6 +15,8 @@ import { ScanHistory } from './components/ScanHistory';
 import { RNLookupCard } from './components/RNLookupCard';
 import { BadgeUnlock } from './components/BadgeUnlock';
 import { BadgeGallery } from './components/BadgeGallery';
+import { InstallBanner } from './components/InstallBanner';
+import { ScanStats } from './components/ScanStats';
 import { useScanHistory } from './hooks/useScanHistory';
 import { useFavorites } from './hooks/useFavorites';
 import { useBadges } from './hooks/useBadges';
@@ -40,6 +42,18 @@ export const App: React.FC = () => {
     checkTabVisits(visitedTabsRef.current);
   }, [activeTab, checkTabVisits]);
 
+  // Keyboard shortcuts: 1-4 for tabs
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      const tabMap: Record<string, typeof activeTab> = { '1': 'scan', '2': 'market', '3': 'intel', '4': 'map' };
+      const tab = tabMap[e.key];
+      if (tab) setActiveTab(tab);
+    };
+    document.addEventListener('keydown', handleKey);
+    return () => document.removeEventListener('keydown', handleKey);
+  }, []);
+
   const handleEnterVault = useCallback(() => {
     safeLocalStorage.setItem(SPLASH_KEY, '1');
     setShowSplash(false);
@@ -54,10 +68,10 @@ export const App: React.FC = () => {
   );
 
   const tabs = [
-    { id: 'scan' as const, icon: Scan, label: 'Scan' },
-    { id: 'market' as const, icon: Store, label: 'Market' },
-    { id: 'intel' as const, icon: MessageCircle, label: 'Intel' },
-    { id: 'map' as const, icon: MapPin, label: 'Map' },
+    { id: 'scan' as const, icon: Scan, label: 'Scan', key: '1' },
+    { id: 'market' as const, icon: Store, label: 'Market', key: '2' },
+    { id: 'intel' as const, icon: MessageCircle, label: 'Intel', key: '3' },
+    { id: 'map' as const, icon: MapPin, label: 'Map', key: '4' },
   ];
 
   if (showSplash) {
@@ -67,6 +81,7 @@ export const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#0A0A0F] text-white pb-24">
       <ToastOverlay />
+      <InstallBanner />
 
       {/* Badge unlock celebration */}
       {lastUnlocked && <BadgeUnlock badge={lastUnlocked} onDismiss={dismissCelebration} />}
@@ -109,6 +124,7 @@ export const App: React.FC = () => {
       <main className="px-6 py-8">
         {activeTab === 'scan' && (
           <>
+            <ScanStats history={history} />
             <Scanner onResult={handleScanResult} />
             <RNLookupCard />
             <BadgeGallery isUnlocked={isUnlocked} />
@@ -156,6 +172,7 @@ export const App: React.FC = () => {
             >
               <tab.icon size={20} />
               <span className="text-[10px] font-black uppercase tracking-widest">{tab.label}</span>
+              <span className="hidden sm:block text-[8px] font-mono text-white/15">{tab.key}</span>
             </button>
           ))}
         </div>

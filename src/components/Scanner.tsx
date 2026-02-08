@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Camera, Upload, Zap, Activity } from 'lucide-react';
 import { identifyGrail } from '../services/geminiService';
 import { emitToastShow, emitAchievement } from '../eventBus';
+import { playScanStart, playScanComplete, playError } from '../lib/sounds';
 import { SCAN_STATUS_MESSAGES } from '../constants';
 import { ScannerHUD } from './ScannerHUD';
 import { ForensicReportPanel } from './ForensicReportPanel';
@@ -64,12 +65,16 @@ export const Scanner: React.FC<ScannerProps> = ({ onResult }) => {
   const doScan = async (base64: string) => {
     setScanning(true);
     setResult(null);
+    playScanStart();
     try {
       const data = await identifyGrail(base64);
+      navigator.vibrate?.(200);
+      playScanComplete();
       setResult(data);
       onResult(data);
       if (data.isAuthentic && data.confidence > 0.8) emitAchievement(data.name);
     } catch {
+      playError();
       emitToastShow({
         variant: 'error',
         title: 'Scan Failed',
@@ -105,11 +110,17 @@ export const Scanner: React.FC<ScannerProps> = ({ onResult }) => {
       streamRef.current = ms;
       if (videoRef.current) videoRef.current.srcObject = ms;
       setCameraMode(true);
-    } catch {
+    } catch (err) {
+      const msg =
+        err instanceof DOMException && err.name === 'NotAllowedError'
+          ? 'Camera blocked — tap the lock icon in your address bar to allow.'
+          : err instanceof DOMException && err.name === 'NotFoundError'
+            ? 'No camera found on this device.'
+            : 'Enable camera in browser settings.';
       emitToastShow({
         variant: 'error',
         title: 'Camera Error',
-        message: 'Enable camera in settings.',
+        message: msg,
       });
     }
   };

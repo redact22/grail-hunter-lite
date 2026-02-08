@@ -77,10 +77,12 @@ describe('ForensicReportPanel', () => {
     expect(screen.getByText('Platform Sandals')).toBeInTheDocument();
   });
 
-  it('shows audio briefing and scan another buttons', () => {
+  it('shows action buttons (audio, share, scan another)', () => {
     render(<ForensicReportPanel result={grailResult} onReset={vi.fn()} />);
-    expect(screen.getByText('Audio Brief')).toBeInTheDocument();
     expect(screen.getByText('Scan Another')).toBeInTheDocument();
+    // Audio + Share are icon-only buttons
+    const buttons = screen.getAllByRole('button');
+    expect(buttons.length).toBeGreaterThanOrEqual(3);
   });
 
   it('calls onReset when scan another is clicked', async () => {

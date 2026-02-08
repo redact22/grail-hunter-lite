@@ -16,7 +16,7 @@ export const ConfidenceRing: React.FC<ConfidenceRingProps> = ({ confidence, size
   return (
     <div
       className="relative flex items-center justify-center"
-      style={{ width: size, height: size }}
+      style={{ width: size, height: size, filter: `drop-shadow(0 0 ${pct >= 80 ? '12' : '6'}px ${color}40)` }}
       data-testid="confidence-ring"
     >
       <svg width={size} height={size} className="rotate-[-90deg]">

@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { ShieldCheck, ShieldX, AlertTriangle, Volume2, RotateCcw } from 'lucide-react';
+import { ShieldCheck, ShieldX, AlertTriangle, Volume2, RotateCcw, Share2 } from 'lucide-react';
 import { ConfidenceRing } from './ConfidenceRing';
 import { ReasoningChain } from './ReasoningChain';
 import { generateStylingAudio } from '../services/geminiService';
+import { emitToastShow } from '../eventBus';
+import { fireConfetti } from '../lib/confetti';
 import { rarityColors } from '../constants';
 import type { IdentificationResult } from '../types';
 
@@ -25,8 +27,23 @@ export const ForensicReportPanel: React.FC<ForensicReportPanelProps> = ({ result
 
   useEffect(() => {
     const raf = requestAnimationFrame(() => setReveal(true));
+    if (result.rarity === 'Grail' && result.isAuthentic && result.confidence > 0.9) {
+      setTimeout(() => fireConfetti(), 600);
+    }
     return () => cancelAnimationFrame(raf);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleShare = useCallback(async () => {
+    const text = `${result.isAuthentic ? '✅' : '⚠️'} ${result.name} by ${result.brand} — ${result.era}\nConfidence: ${Math.round(result.confidence * 100)}% | Value: ${result.estimatedValue}\nScanned with Grail Hunter`;
+    if (navigator.share) {
+      try { await navigator.share({ title: `Grail Hunter — ${result.name}`, text, url: window.location.href }); return; } catch { /* dismissed */ }
+    }
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(text)
+        .then(() => emitToastShow({ variant: 'info', title: 'Copied', message: 'Report copied to clipboard.', ttl: 1800 }))
+        .catch(() => {});
+    }
+  }, [result]);
 
   const handleAudioBriefing = useCallback(async () => {
     if (audioPlaying) return;
@@ -196,10 +213,15 @@ export const ForensicReportPanel: React.FC<ForensicReportPanelProps> = ({ result
           <button
             onClick={handleAudioBriefing}
             disabled={audioPlaying}
-            className="hv-btn flex-1 py-4 rounded-2xl bg-white/5 border border-white/10 text-white text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 active:scale-95 disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:outline-offset-2"
+            className="hv-btn py-4 px-4 min-w-[52px] rounded-2xl bg-white/5 border border-white/10 text-white text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 active:scale-95 disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:outline-offset-2"
           >
             <Volume2 size={16} className={audioPlaying ? 'animate-pulse' : ''} aria-hidden="true" />
-            {audioPlaying ? 'Playing...' : 'Audio Brief'}
+          </button>
+          <button
+            onClick={handleShare}
+            className="hv-btn py-4 px-4 min-w-[52px] rounded-2xl bg-white/5 border border-white/10 text-white text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:outline-offset-2"
+          >
+            <Share2 size={16} aria-hidden="true" />
           </button>
           <button
             onClick={onReset}

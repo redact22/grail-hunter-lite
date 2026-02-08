@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0A0A0F"/>
+      <stop offset="100%" stop-color="#12121A"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="800" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="600" y="45" font-family="system-ui, sans-serif" font-size="20" font-weight="900" text-anchor="middle" fill="white" letter-spacing="4">GRAIL HUNTER LITE — ARCHITECTURE</text>
+  <text x="600" y="68" font-family="system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle" fill="rgba(43,243,192,0.5)" letter-spacing="3">5 GEMINI APIs ACROSS 4 MODELS</text>
+
+  <!-- USER layer -->
+  <rect x="460" y="95" width="280" height="55" rx="12" fill="rgba(43,243,192,0.08)" stroke="rgba(43,243,192,0.3)" stroke-width="1.5"/>
+  <text x="600" y="118" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle" fill="rgba(43,243,192,0.5)" letter-spacing="2">USER</text>
+  <text x="600" y="138" font-family="system-ui, sans-serif" font-size="14" font-weight="800" text-anchor="middle" fill="white">Camera / Upload / Chat / Map</text>
+
+  <!-- Arrow down from user -->
+  <line x1="600" y1="150" x2="600" y2="185" stroke="rgba(43,243,192,0.3)" stroke-width="1.5"/>
+  <polygon points="595,183 605,183 600,193" fill="rgba(43,243,192,0.4)"/>
+
+  <!-- REACT APP layer -->
+  <rect x="300" y="195" width="600" height="55" rx="12" fill="rgba(155,123,255,0.08)" stroke="rgba(155,123,255,0.3)" stroke-width="1.5"/>
+  <text x="600" y="218" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle" fill="rgba(155,123,255,0.5)" letter-spacing="2">REACT 19 + TYPESCRIPT (STRICT)</text>
+  <text x="600" y="238" font-family="system-ui, sans-serif" font-size="13" font-weight="700" text-anchor="middle" fill="white">geminiService.ts — Central API Orchestration</text>
+
+  <!-- Arrows fanning out to 5 API boxes -->
+  <!-- Left arrow to Vision -->
+  <line x1="420" y1="250" x2="140" y2="320" stroke="rgba(43,243,192,0.2)" stroke-width="1"/>
+  <polygon points="137,316 143,316 140,324" fill="rgba(43,243,192,0.3)"/>
+  <!-- Left-center arrow to Search -->
+  <line x1="480" y1="250" x2="360" y2="320" stroke="rgba(43,243,192,0.2)" stroke-width="1"/>
+  <polygon points="357,316 363,316 360,324" fill="rgba(43,243,192,0.3)"/>
+  <!-- Center arrow to Maps -->
+  <line x1="600" y1="250" x2="600" y2="320" stroke="rgba(43,243,192,0.2)" stroke-width="1"/>
+  <polygon points="595,318 605,318 600,326" fill="rgba(43,243,192,0.3)"/>
+  <!-- Right-center arrow to TTS -->
+  <line x1="720" y1="250" x2="840" y2="320" stroke="rgba(43,243,192,0.2)" stroke-width="1"/>
+  <polygon points="837,316 843,316 840,324" fill="rgba(43,243,192,0.3)"/>
+  <!-- Right arrow to Veo -->
+  <line x1="780" y1="250" x2="1060" y2="320" stroke="rgba(43,243,192,0.2)" stroke-width="1"/>
+  <polygon points="1057,316 1063,316 1060,324" fill="rgba(43,243,192,0.3)"/>
+
+  <!-- API BOX 1: Vision + Extended Thinking + Structured Output -->
+  <rect x="30" y="325" width="220" height="150" rx="12" fill="rgba(43,243,192,0.06)" stroke="rgba(43,243,192,0.25)" stroke-width="1.5"/>
+  <text x="140" y="350" font-family="system-ui, sans-serif" font-size="12" font-weight="800" text-anchor="middle" fill="#2BF3C0" letter-spacing="1">VISION</text>
+  <text x="140" y="370" font-family="system-ui, sans-serif" font-size="9" font-weight="600" text-anchor="middle" fill="rgba(255,255,255,0.4)" letter-spacing="1">+ EXTENDED THINKING</text>
+  <text x="140" y="385" font-family="system-ui, sans-serif" font-size="9" font-weight="600" text-anchor="middle" fill="rgba(255,255,255,0.4)" letter-spacing="1">+ STRUCTURED OUTPUT</text>
+  <line x1="60" y1="398" x2="220" y2="398" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+  <text x="140" y="416" font-family="monospace" font-size="9" text-anchor="middle" fill="rgba(43,243,192,0.6)">gemini-3-flash-preview</text>
+  <text x="140" y="434" font-family="system-ui, sans-serif" font-size="9" text-anchor="middle" fill="rgba(255,255,255,0.35)">thinkingLevel: high</text>
+  <text x="140" y="449" font-family="system-ui, sans-serif" font-size="9" text-anchor="middle" fill="rgba(255,255,255,0.35)">responseMimeType: json</text>
+  <text x="140" y="464" font-family="system-ui, sans-serif" font-size="9" text-anchor="middle" fill="rgba(255,255,255,0.35)">Image + Schema in</text>
+
+  <!-- API BOX 2: Search Grounding -->
+  <rect x="270" y="325" width="180" height="150" rx="12" fill="rgba(43,243,192,0.06)" stroke="rgba(43,243,192,0.25)" stroke-width="1.5"/>
+  <text x="360" y="350" font-family="system-ui, sans-serif" font-size="12" font-weight="800" text-anchor="middle" fill="#2BF3C0" letter-spacing="1">SEARCH</text>
+  <text x="360" y="370" font-family="system-ui, sans-serif" font-size="9" font-weight="600" text-anchor="middle" fill="rgba(255,255,255,0.4)" letter-spacing="1">GROUNDING</text>
+  <line x1="295" y1="383" x2="425" y2="383" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+  <text x="360" y="401" font-family="monospace" font-size="9" text-anchor="middle" fill="rgba(43,243,192,0.6)">gemini-3-flash-preview</text>
+  <text x="360" y="419" font-family="system-ui, sans-serif" font-size="9" text-anchor="middle" fill="rgba(255,255,255,0.35)">tools: [googleSearch]</text>
+  <text x="360" y="437" font-family="system-ui, sans-serif" font-size="9" text-anchor="middle" fill="rgba(255,255,255,0.35)">Intel tab Q&amp;A</text>
+  <text x="360" y="455" font-family="system-ui, sans-serif" font-size="9" text-anchor="middle" fill="rgba(255,255,255,0.35)">Cited sources</text>
+
+  <!-- API BOX 3: Maps Grounding -->
+  <rect x="470" y="325" width="180" height="150" rx="12" fill="rgba(43,243,192,0.06)" stroke="rgba(43,243,192,0.25)" stroke-width="1.5"/>
+  <text x="560" y="350" font-family="system-ui, sans-serif" font-size="12" font-weight="800" text-anchor="middle" fill="#2BF3C0" letter-spacing="1">MAPS</text>
+  <text x="560" y="370" font-family="system-ui, sans-serif" font-size="9" font-weight="600" text-anchor="middle" fill="rgba(255,255,255,0.4)" letter-spacing="1">GROUNDING</text>
+  <line x1="495" y1="383" x2="625" y2="383" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+  <text x="560" y="401" font-family="monospace" font-size="9" text-anchor="middle" fill="rgba(43,243,192,0.6)">gemini-2.5-flash</text>
+  <text x="560" y="419" font-family="system-ui, sans-serif" font-size="9" text-anchor="middle" fill="rgba(255,255,255,0.35)">tools: [googleMaps]</text>
+  <text x="560" y="437" font-family="system-ui, sans-serif" font-size="9" text-anchor="middle" fill="rgba(255,255,255,0.35)">Geolocation input</text>
+  <text x="560" y="455" font-family="system-ui, sans-serif" font-size="9" text-anchor="middle" fill="rgba(255,255,255,0.35)">Nearby vintage stores</text>
+
+  <!-- API BOX 4: TTS -->
+  <rect x="670" y="325" width="180" height="150" rx="12" fill="rgba(43,243,192,0.06)" stroke="rgba(43,243,192,0.25)" stroke-width="1.5"/>
+  <text x="760" y="350" font-family="system-ui, sans-serif" font-size="12" font-weight="800" text-anchor="middle" fill="#2BF3C0" letter-spacing="1">TTS</text>
+  <text x="760" y="370" font-family="system-ui, sans-serif" font-size="9" font-weight="600" text-anchor="middle" fill="rgba(255,255,255,0.4)" letter-spacing="1">TEXT-TO-SPEECH</text>
+  <line x1="695" y1="383" x2="825" y2="383" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+  <text x="760" y="401" font-family="monospace" font-size="9" text-anchor="middle" fill="rgba(43,243,192,0.6)">gemini-2.5-flash-preview-tts</text>
+  <text x="760" y="419" font-family="system-ui, sans-serif" font-size="9" text-anchor="middle" fill="rgba(255,255,255,0.35)">Voice: Kore</text>
+  <text x="760" y="437" font-family="system-ui, sans-serif" font-size="9" text-anchor="middle" fill="rgba(255,255,255,0.35)">Audio briefings</text>
+  <text x="760" y="455" font-family="system-ui, sans-serif" font-size="9" text-anchor="middle" fill="rgba(255,255,255,0.35)">PCM16 → WAV</text>
+
+  <!-- API BOX 5: Veo -->
+  <rect x="870" y="325" width="180" height="150" rx="12" fill="rgba(43,243,192,0.06)" stroke="rgba(43,243,192,0.25)" stroke-width="1.5"/>
+  <text x="960" y="350" font-family="system-ui, sans-serif" font-size="12" font-weight="800" text-anchor="middle" fill="#2BF3C0" letter-spacing="1">VEO 3.1</text>
+  <text x="960" y="370" font-family="system-ui, sans-serif" font-size="9" font-weight="600" text-anchor="middle" fill="rgba(255,255,255,0.4)" letter-spacing="1">VIDEO GENERATION</text>
+  <line x1="895" y1="383" x2="1025" y2="383" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+  <text x="960" y="401" font-family="monospace" font-size="9" text-anchor="middle" fill="rgba(43,243,192,0.6)">veo-3.1-fast-generate</text>
+  <text x="960" y="419" font-family="system-ui, sans-serif" font-size="9" text-anchor="middle" fill="rgba(255,255,255,0.35)">-preview</text>
+  <text x="960" y="437" font-family="system-ui, sans-serif" font-size="9" text-anchor="middle" fill="rgba(255,255,255,0.35)">Cinematic reels</text>
+  <text x="960" y="455" font-family="system-ui, sans-serif" font-size="9" text-anchor="middle" fill="rgba(255,255,255,0.35)">Social sharing</text>
+
+  <!-- Arrows down to output layer -->
+  <line x1="140" y1="475" x2="140" y2="530" stroke="rgba(43,243,192,0.2)" stroke-width="1"/>
+  <line x1="360" y1="475" x2="360" y2="530" stroke="rgba(43,243,192,0.2)" stroke-width="1"/>
+  <line x1="560" y1="475" x2="560" y2="530" stroke="rgba(43,243,192,0.2)" stroke-width="1"/>
+  <line x1="760" y1="475" x2="760" y2="530" stroke="rgba(43,243,192,0.2)" stroke-width="1"/>
+  <line x1="960" y1="475" x2="960" y2="530" stroke="rgba(43,243,192,0.2)" stroke-width="1"/>
+
+  <!-- Output boxes -->
+  <rect x="55" y="535" width="170" height="45" rx="8" fill="rgba(255,176,32,0.08)" stroke="rgba(255,176,32,0.25)" stroke-width="1"/>
+  <text x="140" y="555" font-family="system-ui, sans-serif" font-size="10" font-weight="700" text-anchor="middle" fill="rgba(255,176,32,0.7)" letter-spacing="1">FORENSIC REPORT</text>
+  <text x="140" y="571" font-family="system-ui, sans-serif" font-size="8" text-anchor="middle" fill="rgba(255,255,255,0.3)">Confidence + Verdict + Value</text>
+
+  <rect x="275" y="535" width="170" height="45" rx="8" fill="rgba(255,176,32,0.08)" stroke="rgba(255,176,32,0.25)" stroke-width="1"/>
+  <text x="360" y="555" font-family="system-ui, sans-serif" font-size="10" font-weight="700" text-anchor="middle" fill="rgba(255,176,32,0.7)" letter-spacing="1">INTEL CHAT</text>
+  <text x="360" y="571" font-family="system-ui, sans-serif" font-size="8" text-anchor="middle" fill="rgba(255,255,255,0.3)">Market Q&amp;A + Citations</text>
+
+  <rect x="475" y="535" width="170" height="45" rx="8" fill="rgba(255,176,32,0.08)" stroke="rgba(255,176,32,0.25)" stroke-width="1"/>
+  <text x="560" y="555" font-family="system-ui, sans-serif" font-size="10" font-weight="700" text-anchor="middle" fill="rgba(255,176,32,0.7)" letter-spacing="1">NEARBY STORES</text>
+  <text x="560" y="571" font-family="system-ui, sans-serif" font-size="8" text-anchor="middle" fill="rgba(255,255,255,0.3)">Location-aware Discovery</text>
+
+  <rect x="675" y="535" width="170" height="45" rx="8" fill="rgba(255,176,32,0.08)" stroke="rgba(255,176,32,0.25)" stroke-width="1"/>
+  <text x="760" y="555" font-family="system-ui, sans-serif" font-size="10" font-weight="700" text-anchor="middle" fill="rgba(255,176,32,0.7)" letter-spacing="1">AUDIO BRIEF</text>
+  <text x="760" y="571" font-family="system-ui, sans-serif" font-size="8" text-anchor="middle" fill="rgba(255,255,255,0.3)">Spoken Report Summary</text>
+
+  <rect x="875" y="535" width="170" height="45" rx="8" fill="rgba(255,176,32,0.08)" stroke="rgba(255,176,32,0.25)" stroke-width="1"/>
+  <text x="960" y="555" font-family="system-ui, sans-serif" font-size="10" font-weight="700" text-anchor="middle" fill="rgba(255,176,32,0.7)" letter-spacing="1">PRODUCT REEL</text>
+  <text x="960" y="571" font-family="system-ui, sans-serif" font-size="8" text-anchor="middle" fill="rgba(255,255,255,0.3)">Cinematic Social Video</text>
+
+  <!-- Local data layer -->
+  <rect x="170" y="620" width="860" height="55" rx="12" fill="rgba(255,59,212,0.06)" stroke="rgba(255,59,212,0.2)" stroke-width="1"/>
+  <text x="600" y="643" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle" fill="rgba(255,59,212,0.5)" letter-spacing="2">LOCAL DATA LAYER (NO BACKEND)</text>
+  <text x="600" y="663" font-family="system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle" fill="rgba(255,255,255,0.3)">RN/WPL Dating Engine  |  Scan History  |  Favorites  |  Badges  |  safeLocalStorage</text>
+
+  <!-- Arrows from outputs to local layer -->
+  <line x1="140" y1="580" x2="300" y2="620" stroke="rgba(255,176,32,0.15)" stroke-width="0.5"/>
+  <line x1="360" y1="580" x2="400" y2="620" stroke="rgba(255,176,32,0.15)" stroke-width="0.5"/>
+  <line x1="560" y1="580" x2="560" y2="620" stroke="rgba(255,176,32,0.15)" stroke-width="0.5"/>
+  <line x1="760" y1="580" x2="720" y2="620" stroke="rgba(255,176,32,0.15)" stroke-width="0.5"/>
+  <line x1="960" y1="580" x2="900" y2="620" stroke="rgba(255,176,32,0.15)" stroke-width="0.5"/>
+
+  <!-- Deploy layer -->
+  <rect x="350" y="715" width="500" height="45" rx="12" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="600" y="738" font-family="system-ui, sans-serif" font-size="10" font-weight="700" text-anchor="middle" fill="rgba(255,255,255,0.3)" letter-spacing="2">VERCEL EDGE  |  77 TESTS  |  322KB BUNDLE  |  SIMULATION FALLBACK</text>
+  <text x="600" y="753" font-family="system-ui, sans-serif" font-size="9" font-weight="600" text-anchor="middle" fill="rgba(255,255,255,0.2)" letter-spacing="1">Serverless API handlers: /api/scan  /api/assistant  /api/stores  /api/styling</text>
+
+  <line x1="600" y1="675" x2="600" y2="715" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+
+  <!-- Corner brackets -->
+  <g stroke="#2BF3C0" stroke-width="1.5" fill="none" opacity="0.1">
+    <path d="M15,15 L15,45 M15,15 L45,15"/>
+    <path d="M1185,15 L1185,45 M1185,15 L1155,15"/>
+    <path d="M15,785 L15,755 M15,785 L45,785"/>
+    <path d="M1185,785 L1185,755 M1185,785 L1155,785"/>
+  </g>
+</svg>

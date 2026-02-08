@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Trash2 } from 'lucide-react';
+import React, { useState, useCallback } from 'react';
+import { ChevronDown, ChevronUp, Trash2, Download } from 'lucide-react';
 import { rarityColors } from '../constants';
 import type { IdentificationResult } from '../types';
 
@@ -10,6 +10,33 @@ interface ScanHistoryProps {
 
 export const ScanHistory: React.FC<ScanHistoryProps> = ({ history, onClear }) => {
   const [expanded, setExpanded] = useState(false);
+
+  const exportDossier = useCallback(() => {
+    const dossier = {
+      title: 'GRAIL HUNTER — Forensic Scan Dossier',
+      exported: new Date().toISOString(),
+      totalScans: history.length,
+      authenticated: history.filter((s) => s.isAuthentic).length,
+      flagged: history.filter((s) => !s.isAuthentic).length,
+      scans: history.map((s) => ({
+        name: s.name,
+        brand: s.brand,
+        era: s.era,
+        rarity: s.rarity,
+        confidence: `${Math.round(s.confidence * 100)}%`,
+        value: s.estimatedValue,
+        authentic: s.isAuthentic,
+        redFlags: s.redFlags ?? [],
+      })),
+    };
+    const blob = new Blob([JSON.stringify(dossier, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `grail-hunter-dossier-${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [history]);
 
   if (history.length === 0) return null;
 
@@ -49,12 +76,20 @@ export const ScanHistory: React.FC<ScanHistoryProps> = ({ history, onClear }) =>
               </div>
             );
           })}
-          <button
-            onClick={onClear}
-            className="hv-btn flex items-center gap-2 px-4 py-2 rounded-xl text-red-400/60 text-[10px] font-black uppercase tracking-widest hover:text-red-400"
-          >
-            <Trash2 size={12} /> Clear History
-          </button>
+          <div className="flex gap-3">
+            <button
+              onClick={exportDossier}
+              className="hv-btn flex items-center gap-2 px-4 py-2 rounded-xl text-[#2BF3C0]/60 text-[10px] font-black uppercase tracking-widest hover:text-[#2BF3C0] border border-[#2BF3C0]/10"
+            >
+              <Download size={12} /> Export Dossier
+            </button>
+            <button
+              onClick={onClear}
+              className="hv-btn flex items-center gap-2 px-4 py-2 rounded-xl text-red-400/60 text-[10px] font-black uppercase tracking-widest hover:text-red-400"
+            >
+              <Trash2 size={12} /> Clear
+            </button>
+          </div>
         </div>
       )}
     </div>

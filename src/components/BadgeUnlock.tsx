@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Award } from 'lucide-react';
+import { playBadgeUnlock } from '../lib/sounds';
 import type { BadgeDef } from '../data/badges';
 
 interface BadgeUnlockProps {
@@ -11,6 +12,8 @@ export const BadgeUnlock: React.FC<BadgeUnlockProps> = ({ badge, onDismiss }) =>
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    navigator.vibrate?.(300);
+    playBadgeUnlock();
     const showRaf = requestAnimationFrame(() => setVisible(true));
     const timer = setTimeout(() => {
       setVisible(false);
