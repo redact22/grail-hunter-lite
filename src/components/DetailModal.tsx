@@ -82,12 +82,22 @@ export const DetailModal: React.FC<DetailModalProps> = ({ item, onClose }) => {
 
   const handleReel = async () => {
     setIsGeneratingVideo(true);
-    emitToastShow({ variant: 'info', title: 'Cinematic Reel', message: 'Generating...' });
+    emitToastShow({
+      variant: 'info',
+      title: 'Cinematic Reel',
+      message: 'Generating...',
+      ttl: 1800,
+    });
     try {
       const url = await generateProductReel(item);
       if (url) {
         setVideoUrl(url);
-        emitToastShow({ variant: 'success', title: 'Reel Ready', message: 'Generated.' });
+        emitToastShow({
+          variant: 'success',
+          title: 'Reel Ready',
+          message: 'Generated.',
+          ttl: 2400,
+        });
       } else
         emitToastShow({ variant: 'error', title: 'Unavailable', message: 'Veo not available.' });
     } catch {
@@ -115,7 +125,12 @@ export const DetailModal: React.FC<DetailModalProps> = ({ item, onClose }) => {
       navigator.clipboard
         .writeText(data.text)
         .then(() =>
-          emitToastShow({ variant: 'info', title: 'Copied', message: 'Share text copied.' })
+          emitToastShow({
+            variant: 'info',
+            title: 'Copied',
+            message: 'Share text copied.',
+            ttl: 1800,
+          })
         )
         .catch(() => {});
     }

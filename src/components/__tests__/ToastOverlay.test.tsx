@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, act } from '@testing-library/react';
+import { render, screen, act, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { ToastOverlay } from '../ToastOverlay';
 import { emitToastShow } from '../../eventBus';
@@ -33,5 +33,34 @@ describe('ToastOverlay', () => {
     });
     expect(screen.queryByText('Dismiss Me')).not.toBeInTheDocument();
     vi.useRealTimers();
+  });
+
+  it('supports dismiss-on-click', () => {
+    render(<ToastOverlay />);
+    act(() => {
+      emitToastShow({ variant: 'info', title: 'Tap to dismiss', message: 'Dismiss manually' });
+    });
+
+    fireEvent.click(screen.getByText('Tap to dismiss'));
+    expect(screen.queryByText('Tap to dismiss')).not.toBeInTheDocument();
+  });
+
+  it('keeps only the latest four toasts visible for clean stacking', () => {
+    render(<ToastOverlay />);
+
+    act(() => {
+      for (let idx = 1; idx <= 5; idx += 1) {
+        emitToastShow({
+          variant: 'info',
+          title: `Toast ${idx}`,
+          message: `Message ${idx}`,
+          ttl: 10_000,
+        });
+      }
+    });
+
+    expect(screen.queryByText('Toast 1')).not.toBeInTheDocument();
+    expect(screen.getByText('Toast 2')).toBeInTheDocument();
+    expect(screen.getByText('Toast 5')).toBeInTheDocument();
   });
 });

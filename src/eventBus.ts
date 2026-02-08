@@ -23,6 +23,13 @@ export const TOAST_HIDE = 'toast:hide';
 
 let toastCounter = 0;
 
+const DEFAULT_TOAST_TTL: Record<ToastVariant, number> = {
+  success: 2600,
+  info: 2400,
+  error: 4000,
+  achievement: 6000,
+};
+
 export const emitToastShow = (options: {
   variant: ToastVariant;
   title: string;
@@ -32,7 +39,7 @@ export const emitToastShow = (options: {
   const toast: Toast = {
     id: `toast-${++toastCounter}`,
     ...options,
-    ttl: options.ttl ?? 4000,
+    ttl: options.ttl ?? DEFAULT_TOAST_TTL[options.variant],
   };
   eventBus.emit(TOAST_SHOW, toast);
 };
