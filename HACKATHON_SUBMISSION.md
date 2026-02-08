@@ -12,6 +12,12 @@
 - [ ] **Submit on DevPost** → gemini3.devpost.com
 - [ ] **Test production URL on mobile** → verify camera scan works
 - [ ] **Verify Deployment Protection is OFF** → Vercel Dashboard > Settings > Deployment Protection
+- [ ] **Judge Access Smoke Test (required)**
+  1. Open production URL in incognito browser
+  2. Confirm no auth wall/paywall
+  3. Confirm key flows work without account (scan/upload, report view, chat, map/listings as applicable)
+  4. Confirm fallback path works if camera/geolocation blocked
+  5. Re-test from mobile network once before submission
 
 ---
 
