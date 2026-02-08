@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0A0A0F"/>
+      <stop offset="100%" stop-color="#12121A"/>
+    </linearGradient>
+    <linearGradient id="acid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2BF3C0"/>
+      <stop offset="100%" stop-color="#1AD4A8"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Background -->
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <!-- Grid lines -->
+  <g opacity="0.04" stroke="#2BF3C0" stroke-width="0.5">
+    <line x1="0" y1="200" x2="1200" y2="200"/>
+    <line x1="0" y1="400" x2="1200" y2="400"/>
+    <line x1="0" y1="600" x2="1200" y2="600"/>
+    <line x1="300" y1="0" x2="300" y2="800"/>
+    <line x1="600" y1="0" x2="600" y2="800"/>
+    <line x1="900" y1="0" x2="900" y2="800"/>
+  </g>
+  <!-- Lightning icon -->
+  <g transform="translate(540, 140)" filter="url(#glow)">
+    <rect width="120" height="120" rx="32" fill="rgba(43,243,192,0.08)" stroke="rgba(43,243,192,0.2)" stroke-width="1.5"/>
+    <text x="60" y="90" font-size="72" text-anchor="middle" fill="#2BF3C0">&#9889;</text>
+  </g>
+  <!-- Title -->
+  <text x="600" y="370" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="900" text-anchor="middle" fill="white" letter-spacing="8">GRAIL HUNTER</text>
+  <!-- Subtitle -->
+  <text x="600" y="430" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="700" text-anchor="middle" fill="rgba(43,243,192,0.7)" letter-spacing="6">FORENSIC AUTHENTICATION</text>
+  <!-- API badges row -->
+  <g transform="translate(600, 520)" text-anchor="middle">
+    <g transform="translate(-400, 0)">
+      <rect x="-55" y="-16" width="110" height="32" rx="8" fill="rgba(43,243,192,0.1)" stroke="rgba(43,243,192,0.25)" stroke-width="1"/>
+      <text font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="rgba(43,243,192,0.8)" letter-spacing="1">VISION</text>
+    </g>
+    <g transform="translate(-200, 0)">
+      <rect x="-55" y="-16" width="110" height="32" rx="8" fill="rgba(43,243,192,0.1)" stroke="rgba(43,243,192,0.25)" stroke-width="1"/>
+      <text font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="rgba(43,243,192,0.8)" letter-spacing="1">SEARCH</text>
+    </g>
+    <g transform="translate(0, 0)">
+      <rect x="-55" y="-16" width="110" height="32" rx="8" fill="rgba(43,243,192,0.1)" stroke="rgba(43,243,192,0.25)" stroke-width="1"/>
+      <text font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="rgba(43,243,192,0.8)" letter-spacing="1">MAPS</text>
+    </g>
+    <g transform="translate(200, 0)">
+      <rect x="-55" y="-16" width="110" height="32" rx="8" fill="rgba(43,243,192,0.1)" stroke="rgba(43,243,192,0.25)" stroke-width="1"/>
+      <text font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="rgba(43,243,192,0.8)" letter-spacing="1">TTS</text>
+    </g>
+    <g transform="translate(400, 0)">
+      <rect x="-55" y="-16" width="110" height="32" rx="8" fill="rgba(43,243,192,0.1)" stroke="rgba(43,243,192,0.25)" stroke-width="1"/>
+      <text font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="rgba(43,243,192,0.8)" letter-spacing="1">VEO</text>
+    </g>
+  </g>
+  <!-- Bottom tagline -->
+  <text x="600" y="620" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" text-anchor="middle" fill="rgba(255,255,255,0.3)" letter-spacing="4">5 GEMINI APIs &#183; ONE APP</text>
+  <!-- Gemini 3 badge -->
+  <text x="600" y="700" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" text-anchor="middle" fill="rgba(155,123,255,0.5)" letter-spacing="3">BUILT WITH GEMINI 3</text>
+  <!-- Corner brackets -->
+  <g stroke="#2BF3C0" stroke-width="2" fill="none" opacity="0.15">
+    <path d="M40,40 L40,80 M40,40 L80,40"/>
+    <path d="M1160,40 L1160,80 M1160,40 L1120,40"/>
+    <path d="M40,760 L40,720 M40,760 L80,760"/>
+    <path d="M1160,760 L1160,720 M1160,760 L1120,760"/>
+  </g>
+</svg>

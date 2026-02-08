@@ -47,7 +47,7 @@ echo "VITE_GEMINI_API_KEY=your-key-here" > .env
 # Run development server
 npm run dev
 
-# Run tests (68 tests across 13 files)
+# Run tests (77 tests across 13 files)
 npm test
 
 # Build for production

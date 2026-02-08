@@ -24,6 +24,10 @@
   4. Confirm fallback path works if camera/geolocation blocked
   5. Re-test from mobile network once before submission
 
+## RULES COMPLIANCE STATEMENT
+
+GRAIL HUNTER was newly created during the hackathon contest period and is submitted as original work, not a modification, fork, or continuation of a pre-existing app built before the competition window. Any reused open-source libraries are standard third-party dependencies, and all original app logic, UX design, Gemini API integrations, and product implementation for this submission were created during the contest window.
+
 ---
 
 ## LINKS (copy-paste ready)
@@ -50,7 +54,7 @@ Gemini 3 integration is central to the experience:
 - Text-to-Speech (gemini-2.5-flash-preview-tts): Generates spoken audio briefings of scan results using the Kore voice.
 - Veo 3.1: Creates cinematic product reels for social sharing.
 
-Real forensic data: The RN/WPL Dating module uses actual FTC Registration Numbers to date garments. 68 tests. Zero external dependencies beyond React + Gemini SDK. Fully functional in simulation mode without an API key.
+Real forensic data: The RN/WPL Dating module uses actual FTC Registration Numbers to date garments. 77 tests. Zero external dependencies beyond React + Gemini SDK. Fully functional in simulation mode without an API key.
 
 ---
 
@@ -139,7 +143,7 @@ If you don't have items handy, photograph printed images of:
 
 | Criteria | Weight | Our Strengths |
 |----------|--------|---------------|
-| **Technical Execution** | 40% | 5 APIs, structured output, extended thinking, 68 tests, TypeScript strict |
+| **Technical Execution** | 40% | 5 APIs, structured output, extended thinking, 77 tests, TypeScript strict |
 | **Innovation / Wow Factor** | 30% | Real FTC RN dating, forensic reasoning chain, cinematic UI, badge gamification |
 | **Potential Impact** | 20% | $50B+ resale market, authentication fraud is real problem, thrift store use case |
 | **Presentation / Demo** | 10% | Cinematic splash, animated confidence ring, terminal aesthetic |
@@ -153,7 +157,7 @@ If you don't have items handy, photograph printed images of:
 - **gemini-2.5-flash** — Maps Grounding
 - **gemini-2.5-flash-preview-tts** — Text-to-Speech (Kore voice)
 - **veo-3.1-fast-generate-preview** — Video generation
-- **68 tests** | 13 test files
+- **77 tests** | 13 test files
 - **322KB bundle** (98KB gzip) — no bloat
 - **17 components** | 3 custom hooks | 3 data modules
 - **Simulation fallback** — works without API key
@@ -197,7 +201,7 @@ If you don't have items handy, photograph printed images of:
 # Standalone repo
 cd ~/grail-hunter-lite
 npm run dev          # Dev server
-npm test             # 68 tests
+npm test             # 77 tests
 npm run build        # Production build
 
 # Monorepo (internal)
