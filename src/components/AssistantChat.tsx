@@ -98,7 +98,7 @@ export const AssistantChat: React.FC = () => {
                 <button
                   key={s}
                   onClick={() => handleSend(s)}
-                  className="hv-btn px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[11px] font-bold text-white/50 hover:text-white/80 hover:border-white/20 hover:scale-105 active:scale-95 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:outline-offset-2"
+                  className="hv-btn px-4 py-2 rounded-xl bg-white/5 border border-white/15 text-[11px] font-bold text-white/60 hover:text-white/80 hover:border-white/20 hover:scale-105 active:scale-95 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:outline-offset-2"
                 >
                   {s}
                 </button>
@@ -154,7 +154,7 @@ export const AssistantChat: React.FC = () => {
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSend()}
           placeholder="Ask the intelligence network..."
-          className="flex-1 px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-[#2BF3C0]/40"
+          className="flex-1 px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-white text-sm placeholder:text-white/65 focus:outline-none focus:border-[#2BF3C0]/40"
         />
         <button
           onClick={() => handleSend()}
