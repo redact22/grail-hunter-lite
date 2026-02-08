@@ -1,8 +1,24 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, act, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { ToastOverlay } from '../ToastOverlay';
-import { emitToastShow } from '../../eventBus';
+import { emitToastShow, TOAST_TTL_MS, DEFAULT_TOAST_VARIANT } from '../../eventBus';
+import type { ToastVariant } from '../../types';
+
+const VARIANT_CASES: Array<{
+  variant: ToastVariant;
+  title: string;
+  message: string;
+}> = [
+  { variant: 'success', title: 'Success toast', message: 'Success path' },
+  { variant: 'info', title: 'Info toast', message: 'Info path' },
+  { variant: 'error', title: 'Error toast', message: 'Error path' },
+  { variant: 'achievement', title: 'Achievement toast', message: 'Achievement path' },
+];
+
+afterEach(() => {
+  vi.useRealTimers();
+});
 
 describe('ToastOverlay', () => {
   it('renders nothing with no toasts', () => {
@@ -18,31 +34,65 @@ describe('ToastOverlay', () => {
     });
     expect(screen.getByText('Test Title')).toBeInTheDocument();
     expect(screen.getByText('Test message')).toBeInTheDocument();
-    vi.useRealTimers();
   });
 
-  it('auto-dismisses after ttl', () => {
+  it.each(VARIANT_CASES)(
+    'keeps $variant visible until its TTL then auto-dismisses',
+    ({ variant, title, message }) => {
+      vi.useFakeTimers();
+      render(<ToastOverlay />);
+
+      act(() => {
+        emitToastShow({ variant, title, message });
+      });
+
+      const ttl = TOAST_TTL_MS[variant];
+      expect(screen.getByText(title)).toBeInTheDocument();
+
+      act(() => {
+        vi.advanceTimersByTime(ttl - 1);
+      });
+      expect(screen.getByText(title)).toBeInTheDocument();
+
+      act(() => {
+        vi.advanceTimersByTime(1);
+      });
+      expect(screen.queryByText(title)).not.toBeInTheDocument();
+    }
+  );
+
+  it.each(VARIANT_CASES)('supports dismiss-on-click for $variant variant', ({ variant, title, message }) => {
+    render(<ToastOverlay />);
+    act(() => {
+      emitToastShow({ variant, title, message });
+    });
+
+    fireEvent.click(screen.getByText(title));
+    expect(screen.queryByText(title)).not.toBeInTheDocument();
+  });
+
+  it('falls back to default variant policy when an unknown variant is provided', () => {
     vi.useFakeTimers();
     render(<ToastOverlay />);
-    act(() => {
-      emitToastShow({ variant: 'info', title: 'Dismiss Me', message: 'Going away', ttl: 1000 });
-    });
-    expect(screen.getByText('Dismiss Me')).toBeInTheDocument();
-    act(() => {
-      vi.advanceTimersByTime(1500);
-    });
-    expect(screen.queryByText('Dismiss Me')).not.toBeInTheDocument();
-    vi.useRealTimers();
-  });
 
-  it('supports dismiss-on-click', () => {
-    render(<ToastOverlay />);
+    const title = 'Unknown variant';
+    const message = 'Uses fallback behavior';
+
     act(() => {
-      emitToastShow({ variant: 'info', title: 'Tap to dismiss', message: 'Dismiss manually' });
+      emitToastShow({ variant: 'mystery' as ToastVariant, title, message });
     });
 
-    fireEvent.click(screen.getByText('Tap to dismiss'));
-    expect(screen.queryByText('Tap to dismiss')).not.toBeInTheDocument();
+    const toastTitle = screen.getByText(title);
+    const toastContainer = toastTitle.closest('div')?.parentElement;
+    expect(toastContainer).toHaveClass('bg-white/10');
+
+    act(() => {
+      vi.advanceTimersByTime(TOAST_TTL_MS[DEFAULT_TOAST_VARIANT] - 1);
+    });
+    expect(screen.getByText(title)).toBeInTheDocument();
+
+    fireEvent.click(screen.getByText(title));
+    expect(screen.queryByText(title)).not.toBeInTheDocument();
   });
 
   it('keeps only the latest four toasts visible for clean stacking', () => {
