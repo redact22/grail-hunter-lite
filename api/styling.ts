@@ -8,7 +8,7 @@
 import { GoogleGenAI, Type } from '@google/genai';
 import type { Schema } from '@google/genai';
 
-const CHAT_MODEL = 'gemini-3-pro';
+const CHAT_MODEL = 'gemini-3-flash-preview';
 
 const STYLING_SCHEMA: Schema = {
   type: Type.OBJECT,

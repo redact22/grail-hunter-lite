@@ -8,7 +8,7 @@
 import { GoogleGenAI, Type, ThinkingLevel } from '@google/genai';
 import type { Schema } from '@google/genai';
 
-const VISION_MODEL = 'gemini-3-pro';
+const VISION_MODEL = 'gemini-3-flash-preview';
 
 const EXPERT_SYSTEM_INSTRUCTION = `You are GRAIL HUNTER, an elite vintage fashion forensics AI.
 You specialize in authenticating and valuing thrift/vintage clothing, shoes, and accessories.

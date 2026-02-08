@@ -7,7 +7,7 @@
  */
 import { GoogleGenAI } from '@google/genai';
 
-const CHAT_MODEL = 'gemini-3-pro';
+const CHAT_MODEL = 'gemini-3-flash-preview';
 
 export default async function handler(req: any, res: any) {
   if (req.method !== 'POST') {
