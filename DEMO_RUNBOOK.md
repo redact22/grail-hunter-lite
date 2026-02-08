@@ -21,7 +21,7 @@
 
 **Action:** Click "ENTER THE VAULT"
 
-**Say:** _"Grail Hunter is an AI-powered vintage fashion authentication scanner. It uses seven Gemini APIs in one app. Let me show you."_
+**Say:** _"Grail Hunter is an AI-powered vintage fashion authentication scanner. It uses seven Gemini APIs: Vision, Extended Thinking, Structured Output, Search Grounding, Maps Grounding, TTS, and Veo 3.1. Let me show you."_
 
 ---
 
@@ -35,7 +35,7 @@
 2. Select the **authentic vintage image** (Carhartt jacket)
 3. Watch the scan animation with progress bar + HUD phases
 
-**Say:** _"The scanner uses Gemini Vision with extended thinking — it doesn't just classify, it reasons through the authentication like a forensic expert."_
+**Say:** _"The scanner uses Gemini Vision, Extended Thinking, and Structured Output — it doesn't just classify, it reasons through authentication like a forensic expert and returns typed forensic fields."_
 
 **Badge trigger:** "First Scan" badge unlocks! (full-screen celebration overlay, auto-dismiss 3s)
 
@@ -66,7 +66,7 @@
 1. Click **Intel** tab → type "What are the most valuable Halston pieces?"
 2. Click **Map** tab → show nearby vintage stores
 
-**Say:** _"The Intel tab uses Gemini Search grounding for real-time market knowledge. The Map uses Maps grounding to find nearby vintage stores."_
+**Say:** _"The Intel tab uses Search Grounding for real-time market knowledge. The Map uses Maps Grounding to find nearby vintage stores."_
 
 **Badge trigger:** Visiting all 4 tabs (Scan → Market → Intel → Map) unlocks "Void Walker" badge!
 
@@ -84,7 +84,7 @@
 
 ### 2:50–3:00 — CLOSE: The Pitch
 
-**Say:** _"Seven Gemini APIs — Vision, Search grounding, Maps grounding, TTS, Veo, Structured output, and Extended thinking. One app. Built for the thrift economy."_
+**Say:** _"Seven Gemini APIs — Vision, Extended Thinking, Structured Output, Search Grounding, Maps Grounding, TTS, and Veo 3.1. One app. Built for the thrift economy."_
 
 ---
 
@@ -124,6 +124,6 @@
 ## Killer Lines for Q&A
 
 - _"The RN dating formula is a real forensic technique — it's not AI-generated, it's textile science."_
-- _"Extended thinking means the model shows its work — judges can see the reasoning, not just the answer."_
-- _"Seven APIs, zero page reloads. It's a single-page app with 341KB bundle."_
+- _"Extended Thinking means the model shows its work — judges can see the reasoning, not just the answer."_
+- _"Seven Gemini APIs — Vision, Extended Thinking, Structured Output, Search Grounding, Maps Grounding, TTS, and Veo 3.1. Zero page reloads."_
 - _"The gamification layer creates stickiness — users come back to unlock badges and track their scan history."_

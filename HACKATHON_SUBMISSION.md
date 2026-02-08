@@ -27,17 +27,19 @@
 
 ## DEVPOST DESCRIPTION (~200 words — copy-paste ready)
 
-GRAIL HUNTER is a forensic authentication scanner for vintage fashion, built on 5 distinct Gemini APIs.
+GRAIL HUNTER is a forensic authentication scanner for vintage fashion, built on 7 distinct Gemini APIs/capabilities.
 
 How it works: Point your camera at any thrift store find. The AI runs a 4-phase forensic analysis — Visual Thought Signature, Taxonomy, Market Delta, and Authentication Verdict — then delivers a structured report with confidence score, era dating, material composition, red flags, and estimated market value.
 
-Gemini 3 integration is central to the experience:
+Gemini integration is central to the experience:
 
-- Vision + Extended Thinking (gemini-3-flash-preview): The core scan uses thinkingLevel: high with structured output to produce forensic-grade authentication reports from a single image.
-- Search Grounding (gemini-3-flash-preview): The Intel tab answers vintage fashion questions backed by real-time Google Search results.
-- Maps Grounding (gemini-2.5-flash): Discovers nearby vintage/thrift stores using location-aware search.
-- Text-to-Speech (gemini-2.5-flash-preview-tts): Generates spoken audio briefings of scan results using the Kore voice.
-- Veo 3.1: Creates cinematic product reels for social sharing.
+- Vision (`gemini-3-flash-preview`): Core garment scan from a single image.
+- Extended Thinking (`gemini-3-flash-preview` with `thinkingLevel: high`): Multi-phase forensic reasoning chain.
+- Structured Output (`gemini-3-flash-preview` with `responseMimeType: application/json` + schema): Typed report fields for confidence, red flags, and valuation.
+- Search Grounding (`gemini-3-flash-preview` + `googleSearch` tool): Intel tab answers backed by live Google Search sources.
+- Maps Grounding (`gemini-2.5-flash` + `googleMaps` tool): Nearby vintage/thrift store discovery.
+- TTS (`gemini-2.5-flash-preview-tts`, voice: `Kore`): Spoken audio briefings of scan results.
+- Veo 3.1 (`veo-3.1-fast-generate-preview`): Cinematic product reels for social sharing.
 
 Real forensic data: The RN/WPL Dating module uses actual FTC Registration Numbers to date garments. 68 tests. Zero external dependencies beyond React + Gemini SDK. Fully functional in simulation mode without an API key.
 
@@ -84,8 +86,8 @@ Real forensic data: The RN/WPL Dating module uses actual FTC Registration Number
 - Show favorites (heart toggle)
 
 ### 2:50-3:00 — Close
-- Return to Scan tab → show "5 Gemini APIs" badge in header
-- "Five Gemini APIs. One vintage authentication app. Grail Hunter."
+- Return to Scan tab → show "7 Gemini APIs" badge in header
+- "Seven Gemini APIs — Vision, Extended Thinking, Structured Output, Search Grounding, Maps Grounding, TTS, and Veo 3.1. One vintage authentication app. Grail Hunter."
 
 ---
 
@@ -107,7 +109,7 @@ If you don't have items handy, photograph printed images of:
 
 | Criteria | Weight | Our Strengths |
 |----------|--------|---------------|
-| **Technical Execution** | 40% | 5 APIs, structured output, extended thinking, 68 tests, TypeScript strict |
+| **Technical Execution** | 40% | 7 APIs/capabilities, structured output, extended thinking, 68 tests, TypeScript strict |
 | **Innovation / Wow Factor** | 30% | Real FTC RN dating, forensic reasoning chain, cinematic UI, badge gamification |
 | **Potential Impact** | 20% | $50B+ resale market, authentication fraud is real problem, thrift store use case |
 | **Presentation / Demo** | 10% | Cinematic splash, animated confidence ring, terminal aesthetic |
@@ -116,11 +118,14 @@ If you don't have items handy, photograph printed images of:
 
 ## TECHNICAL STATS (for description/video)
 
-- **5 Gemini APIs** across 3 models
-- **gemini-3-flash-preview** — Vision, Chat, Search Grounding
-- **gemini-2.5-flash** — Maps Grounding
-- **gemini-2.5-flash-preview-tts** — Text-to-Speech (Kore voice)
-- **veo-3.1-fast-generate-preview** — Video generation
+- **7 Gemini APIs/capabilities** across 4 models (+ Google Search/Maps tools)
+- **Vision** — `gemini-3-flash-preview`
+- **Extended Thinking** — `gemini-3-flash-preview` (`thinkingLevel: high`)
+- **Structured Output** — `gemini-3-flash-preview` (`responseMimeType: application/json` + schema)
+- **Search Grounding** — `gemini-3-flash-preview` + `googleSearch` tool
+- **Maps Grounding** — `gemini-2.5-flash` + `googleMaps` tool
+- **TTS** — `gemini-2.5-flash-preview-tts` (Kore voice)
+- **Veo 3.1** — `veo-3.1-fast-generate-preview`
 - **68 tests** | 13 test files
 - **322KB bundle** (98KB gzip) — no bloat
 - **17 components** | 3 custom hooks | 3 data modules

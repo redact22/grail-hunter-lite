@@ -4,14 +4,16 @@
 
 Grail Hunter is a forensic authentication tool for vintage fashion. Point your camera at any thrift store find — the AI identifies the item, dates it using label forensics, estimates market value, and delivers a full authentication verdict with reasoning chain.
 
-## 5 Gemini APIs
+## 7 Gemini APIs
 
-| API | Model | What It Does |
-|-----|-------|-------------|
-| **Vision + Structured Output** | `gemini-3-flash-preview` | Analyzes garment images with extended thinking, returns structured forensic report |
-| **Search Grounding** | `gemini-3-flash-preview` | Real-time market intelligence backed by Google Search |
-| **Maps Grounding** | `gemini-2.5-flash` | Discovers nearby vintage stores using location-aware search |
-| **Text-to-Speech** | `gemini-2.5-flash-preview-tts` | Audio briefings of authentication results (Kore voice) |
+| API | Model / Tool | What It Does |
+|-----|--------------|-------------|
+| **Vision** | `gemini-3-flash-preview` | Analyzes garment images for forensic authentication |
+| **Extended Thinking** | `gemini-3-flash-preview` (`thinkingLevel: high`) | Produces multi-phase forensic reasoning |
+| **Structured Output** | `gemini-3-flash-preview` (`responseMimeType: application/json` + schema) | Returns typed report fields for confidence, red flags, and valuation |
+| **Search Grounding** | `gemini-3-flash-preview` + `googleSearch` tool | Real-time market intelligence backed by Google Search |
+| **Maps Grounding** | `gemini-2.5-flash` + `googleMaps` tool | Discovers nearby vintage stores using location-aware search |
+| **TTS** | `gemini-2.5-flash-preview-tts` | Audio briefings of authentication results (Kore voice) |
 | **Veo 3.1** | `veo-3.1-fast-generate-preview` | Generates cinematic product reels for social sharing |
 
 ## Features
@@ -71,7 +73,7 @@ src/
 │   ├── MarketTicker.tsx         # Live market price ticker
 │   └── ...
 ├── services/
-│   └── geminiService.ts # All 5 Gemini API integrations (425 lines)
+│   └── geminiService.ts # All 7 Gemini API integrations (Vision, Extended Thinking, Structured Output, Search Grounding, Maps Grounding, TTS, Veo 3.1)
 ├── data/
 │   ├── rn-database.ts   # 18-brand RN lookup database
 │   ├── rn-dating.ts     # FTC dating formula + analysis
