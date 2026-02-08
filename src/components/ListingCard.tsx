@@ -31,14 +31,21 @@ export const ListingCard: React.FC<ListingCardProps> = ({
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    let flashTimer: ReturnType<typeof setTimeout> | undefined;
     const interval = setInterval(() => {
       setLivePrice((prev) => {
         const next = Math.round(prev * (1 + (Math.random() - 0.5) * 0.006));
-        if (next !== prev) { setPriceFlash(true); setTimeout(() => setPriceFlash(false), 400); }
+        if (next !== prev) {
+          setPriceFlash(true);
+          flashTimer = setTimeout(() => setPriceFlash(false), 400);
+        }
         return next;
       });
     }, 4500);
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      if (flashTimer) clearTimeout(flashTimer);
+    };
   }, []);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {

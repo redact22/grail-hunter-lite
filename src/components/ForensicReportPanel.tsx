@@ -27,10 +27,14 @@ export const ForensicReportPanel: React.FC<ForensicReportPanelProps> = ({ result
 
   useEffect(() => {
     const raf = requestAnimationFrame(() => setReveal(true));
+    let confettiTimer: ReturnType<typeof setTimeout> | undefined;
     if (result.rarity === 'Grail' && result.isAuthentic && result.confidence > 0.9) {
-      setTimeout(() => fireConfetti(), 600);
+      confettiTimer = setTimeout(() => fireConfetti(), 600);
     }
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(raf);
+      if (confettiTimer) clearTimeout(confettiTimer);
+    };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleShare = useCallback(async () => {
@@ -48,9 +52,14 @@ export const ForensicReportPanel: React.FC<ForensicReportPanelProps> = ({ result
   const handleAudioBriefing = useCallback(async () => {
     if (audioPlaying) return;
     setAudioPlaying(true);
-    const briefing = `${result.name} by ${result.brand}. ${result.era} era. ${result.isAuthentic ? 'Authenticated' : 'Flagged as suspicious'}. Confidence ${Math.round(result.confidence * 100)} percent. Estimated value ${result.estimatedValue}. ${result.stylingAdvice ?? ''}`;
-    await generateStylingAudio(briefing);
-    setAudioPlaying(false);
+    try {
+      const briefing = `${result.name} by ${result.brand}. ${result.era} era. ${result.isAuthentic ? 'Authenticated' : 'Flagged as suspicious'}. Confidence ${Math.round(result.confidence * 100)} percent. Estimated value ${result.estimatedValue}. ${result.stylingAdvice ?? ''}`;
+      await generateStylingAudio(briefing);
+    } catch {
+      emitToastShow({ variant: 'error', title: 'Audio Error', message: 'Briefing unavailable.' });
+    } finally {
+      setAudioPlaying(false);
+    }
   }, [result, audioPlaying]);
 
   const style = rarityColors[result.rarity as string] || rarityColors.Common;
@@ -216,9 +225,11 @@ export const ForensicReportPanel: React.FC<ForensicReportPanelProps> = ({ result
             className="hv-btn py-4 px-4 min-w-[52px] rounded-2xl bg-white/5 border border-white/10 text-white text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 active:scale-95 disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:outline-offset-2"
           >
             <Volume2 size={16} className={audioPlaying ? 'animate-pulse' : ''} aria-hidden="true" />
+            <span className="sr-only">Audio briefing</span>
           </button>
           <button
             onClick={handleShare}
+            aria-label="Share report"
             className="hv-btn py-4 px-4 min-w-[52px] rounded-2xl bg-white/5 border border-white/10 text-white text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:outline-offset-2"
           >
             <Share2 size={16} aria-hidden="true" />

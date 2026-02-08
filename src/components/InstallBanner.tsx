@@ -44,6 +44,7 @@ export const InstallBanner: React.FC = () => {
         </button>
         <button
           onClick={() => setDismissed(true)}
+          aria-label="Dismiss install banner"
           className="hv-btn p-2 text-white/30 hover:text-white/60"
         >
           <X size={14} />

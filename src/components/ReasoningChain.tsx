@@ -21,16 +21,19 @@ function useTypewriter(text: string, speed: number, startDelay: number): string 
 
   useEffect(() => {
     setDisplayed('');
+    let intervalId: ReturnType<typeof setInterval> | undefined;
     const delayTimer = setTimeout(() => {
       let idx = 0;
-      const interval = setInterval(() => {
+      intervalId = setInterval(() => {
         idx++;
         setDisplayed(text.slice(0, idx));
-        if (idx >= text.length) clearInterval(interval);
+        if (idx >= text.length) clearInterval(intervalId);
       }, speed);
-      return () => clearInterval(interval);
     }, startDelay);
-    return () => clearTimeout(delayTimer);
+    return () => {
+      clearTimeout(delayTimer);
+      if (intervalId) clearInterval(intervalId);
+    };
   }, [text, speed, startDelay]);
 
   return displayed;

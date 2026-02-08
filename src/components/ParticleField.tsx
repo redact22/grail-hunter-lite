@@ -48,7 +48,7 @@ export const ParticleField: React.FC = () => {
     }
 
     const draw = () => {
-      if (paused) { raf = requestAnimationFrame(draw); return; }
+      if (paused) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       for (const p of particles) {
@@ -88,8 +88,11 @@ export const ParticleField: React.FC = () => {
     };
     raf = requestAnimationFrame(draw);
 
-    // Pause when tab is hidden
-    const handleVisibility = () => { paused = document.hidden; };
+    // Pause when tab is hidden, restart when visible
+    const handleVisibility = () => {
+      paused = document.hidden;
+      if (!paused) { raf = requestAnimationFrame(draw); }
+    };
     document.addEventListener('visibilitychange', handleVisibility);
 
     return () => {

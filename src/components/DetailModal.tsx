@@ -193,6 +193,7 @@ export const DetailModal: React.FC<DetailModalProps> = ({ item, onClose }) => {
           <div className="absolute top-4 right-4 flex gap-2">
             <button
               onClick={onClose}
+              aria-label="Close detail view"
               className="hv-btn p-3 min-w-[48px] min-h-[48px] rounded-2xl bg-black/40 backdrop-blur-xl border border-white/10 text-white active:scale-90 grid place-items-center"
             >
               <X size={22} />
