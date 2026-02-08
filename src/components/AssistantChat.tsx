@@ -89,7 +89,7 @@ export const AssistantChat: React.FC = () => {
       <div ref={scrollRef} className="flex-1 overflow-y-auto space-y-4 mb-4 no-scrollbar">
         {messages.length === 0 && (
           <div className="text-center text-white/20 mt-16">
-            <MessageCircle size={48} className="mx-auto mb-4 opacity-40" />
+            <MessageCircle size={48} className="mx-auto mb-4 opacity-40" aria-hidden="true" />
             <p className="text-sm font-bold mb-6">
               Ask about vintage fashion, market trends, or authentication...
             </p>
@@ -122,7 +122,7 @@ export const AssistantChat: React.FC = () => {
                       rel="noopener noreferrer"
                       className="text-[10px] font-bold text-[#9B7BFF] underline flex items-center gap-1"
                     >
-                      <ExternalLink size={10} />
+                      <ExternalLink size={10} aria-hidden="true" />
                       {l.title}
                     </a>
                   ))}

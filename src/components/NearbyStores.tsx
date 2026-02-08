@@ -36,7 +36,7 @@ export const NearbyStores: React.FC = () => {
   return (
     <div className="max-w-lg mx-auto space-y-4">
       <div className="flex items-center gap-3 mb-6">
-        <MapPin size={20} className="text-[#2BF3C0]" />
+        <MapPin size={20} className="text-[#2BF3C0]" aria-hidden="true" />
         <h2 className="text-lg font-black uppercase tracking-wider text-white">
           Nearby Archive Nodes
         </h2>
@@ -71,7 +71,7 @@ export const NearbyStores: React.FC = () => {
             className="block p-5 rounded-2xl bg-white/[0.03] border border-white/5 hover:bg-white/[0.08] transition-all"
           >
             <div className="flex items-center gap-3">
-              <Store size={18} className="text-[#2BF3C0]" />
+              <Store size={18} className="text-[#2BF3C0]" aria-hidden="true" />
               <div>
                 <p className="text-sm font-black text-white">{s.name}</p>
                 {s.address && <p className="text-[10px] text-white/40">{s.address}</p>}
