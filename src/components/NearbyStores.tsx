@@ -56,14 +56,15 @@ export const NearbyStores: React.FC = () => {
           </p>
         </div>
       ) : (
-        <div className="stagger-children space-y-3">
-          {stores.map((s) => (
+        <div className="space-y-3">
+          {stores.map((s, i) => (
             <a
               key={`${s.name}-${s.address ?? ''}`}
               href={s.uri}
               target="_blank"
               rel="noopener noreferrer"
-              className="block p-5 rounded-2xl bg-white/[0.03] border border-white/5 hover:bg-white/[0.08] hover:border-[#2BF3C0]/20 hover:shadow-[0_4px_24px_rgba(43,243,192,0.06)] transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:outline-offset-2"
+              className="block p-5 rounded-2xl bg-white/[0.03] border border-white/5 hover:bg-white/[0.08] hover:border-[#2BF3C0]/20 hover:shadow-[0_4px_24px_rgba(43,243,192,0.06)] transition-all halston-fade-in-up focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:outline-offset-2"
+              style={{ animationDelay: `${i * 80}ms` }}
             >
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl bg-[#2BF3C0]/10 border border-[#2BF3C0]/20 flex items-center justify-center">
