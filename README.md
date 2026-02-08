@@ -90,6 +90,24 @@ Optimized for low-light thrift store environments:
 - **Google Blue** `#4285F4` — API indicator badges
 - **1px borders** at `white/[0.08]` — Crisp card edges without heavy shadows
 
+## Contributing
+
+This repository is standalone and **must not** use monorepo-only aliases.
+
+- ✅ Use relative or local standalone-safe imports (for example: `./lib/safe-storage`, `../lib/safe-storage`, or `@/` only if locally configured).
+- ❌ Do not import from `@mini-apps/*` (these aliases only exist in internal monorepos and will break CI/builds here).
+- Run `npm run check:imports` before opening a PR.
+
+Example:
+
+```ts
+// Good (standalone-safe)
+import { safeStorage } from './lib/safe-storage';
+
+// Bad (monorepo-only alias)
+import { safeStorage } from '@mini-apps/shared/safe-storage';
+```
+
 ## License
 
 MIT

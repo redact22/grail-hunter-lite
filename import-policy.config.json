@@ -1,0 +1,5 @@
+{
+  "include": ["src", "api"],
+  "extensions": [".js", ".jsx", ".ts", ".tsx"],
+  "forbiddenPrefixes": ["@mini-apps/"]
+}
