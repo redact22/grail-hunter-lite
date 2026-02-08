@@ -75,6 +75,7 @@ export const ListingCard: React.FC<ListingCardProps> = ({
               setLocalFav(!localFav);
             }
           }}
+          aria-pressed={isFav}
           aria-label={isFav ? 'Remove from favorites' : 'Add to favorites'}
           className={`hv-btn absolute top-2 right-2 p-3 min-w-[44px] min-h-[44px] rounded-xl border transition-all active:scale-90 grid place-items-center ${
             isFav
