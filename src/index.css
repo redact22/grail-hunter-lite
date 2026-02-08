@@ -206,3 +206,15 @@ input[type='range']::-moz-range-thumb {
     transition-duration: 0.01ms !important;
   }
 }
+
+
+@media (max-width: 1023px) {
+  .app-bottom-nav {
+    --bottom-nav-safe-pad: max(0.5rem, env(safe-area-inset-bottom, 0.5rem));
+    padding-bottom: var(--bottom-nav-safe-pad);
+  }
+
+  .app-bottom-nav__tab {
+    min-height: 4.5rem;
+  }
+}

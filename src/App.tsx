@@ -134,8 +134,7 @@ export const App: React.FC = () => {
 
       {/* Tab Bar */}
       <nav
-        className="fixed bottom-0 left-0 right-0 z-50 bg-[#0A0A0F]/90 backdrop-blur-xl border-t border-white/5"
-        style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom, 0.5rem))' }}
+        className="app-bottom-nav fixed bottom-0 left-0 right-0 z-50 bg-[#0A0A0F]/90 backdrop-blur-xl border-t border-white/5"
       >
         <div className="max-w-lg mx-auto flex relative">
           {/* Sliding indicator */}
@@ -152,7 +151,7 @@ export const App: React.FC = () => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`hv-btn flex-1 py-4 flex flex-col items-center gap-1 transition-colors duration-200 relative focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:outline-offset-[-2px] ${activeTab === tab.id ? 'text-[#2BF3C0]' : 'text-white/30'}`}
+              className={`hv-btn app-bottom-nav__tab flex-1 py-4 flex flex-col items-center gap-1 transition-colors duration-200 relative focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:outline-offset-[-2px] ${activeTab === tab.id ? 'text-[#2BF3C0]' : 'text-white/30'}`}
             >
               <tab.icon size={20} />
               <span className="text-[10px] font-black uppercase tracking-widest">{tab.label}</span>
