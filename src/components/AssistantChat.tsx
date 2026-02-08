@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { MessageCircle, ExternalLink, Send } from 'lucide-react';
 import { askAssistant } from '../services/geminiService';
 import type { GroundingLink } from '../types';
@@ -9,6 +9,40 @@ interface ChatMessage {
   text: string;
   links?: GroundingLink[];
 }
+
+/** Lightweight markdown-to-HTML for Gemini chat responses (no dependencies). */
+function renderMarkdown(md: string): string {
+  return md
+    .split('\n')
+    .map((line) => {
+      // Headings
+      if (line.startsWith('### ')) return `<p class="font-black text-white text-xs uppercase tracking-wider mt-3 mb-1">${line.slice(4)}</p>`;
+      if (line.startsWith('## ')) return `<p class="font-black text-white text-sm uppercase tracking-wider mt-3 mb-1">${line.slice(3)}</p>`;
+      if (line.startsWith('# ')) return `<p class="font-black text-white text-base uppercase tracking-wider mt-3 mb-1">${line.slice(2)}</p>`;
+      // Bullet lists
+      if (/^[-*]\s/.test(line)) return `<p class="pl-3 before:content-['•'] before:mr-2 before:text-[#2BF3C0]/60">${inlineMarkdown(line.slice(2))}</p>`;
+      // Numbered lists
+      const numMatch = line.match(/^(\d+)\.\s(.*)/);
+      if (numMatch) return `<p class="pl-3"><span class="text-[#2BF3C0]/60 mr-2">${numMatch[1]}.</span>${inlineMarkdown(numMatch[2])}</p>`;
+      // Empty lines
+      if (!line.trim()) return '<p class="h-2"></p>';
+      // Regular paragraphs
+      return `<p>${inlineMarkdown(line)}</p>`;
+    })
+    .join('');
+}
+
+function inlineMarkdown(text: string): string {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '<strong class="text-white font-bold">$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/`(.+?)`/g, '<code class="px-1.5 py-0.5 bg-white/10 rounded text-[#2BF3C0] text-[11px] font-mono">$1</code>');
+}
+
+const MarkdownBubble: React.FC<{ text: string }> = ({ text }) => {
+  const html = useMemo(() => renderMarkdown(text), [text]);
+  return <div className="space-y-1 [&_p]:leading-relaxed" dangerouslySetInnerHTML={{ __html: html }} />;
+};
 
 const SUGGESTIONS = [
   'Recent vintage Prada drops',
@@ -77,7 +111,7 @@ export const AssistantChat: React.FC = () => {
             <div
               className={`max-w-[80%] p-4 rounded-2xl text-sm ${m.role === 'user' ? 'bg-[#2BF3C0]/20 text-[#2BF3C0]' : 'bg-white/5 text-white/80'}`}
             >
-              {m.text}
+              {m.role === 'assistant' ? <MarkdownBubble text={m.text} /> : m.text}
               {m.links && m.links.length > 0 && (
                 <div className="mt-2 flex flex-wrap gap-2">
                   {m.links.map((l) => (
@@ -99,12 +133,17 @@ export const AssistantChat: React.FC = () => {
         ))}
         {loading && (
           <div className="flex justify-start">
-            <div className="p-4 rounded-2xl bg-white/5 flex items-center gap-1.5">
-              <div className="typing-dots flex gap-1">
-                <span />
-                <span />
-                <span />
+            <div className="p-4 rounded-2xl bg-white/5">
+              <div className="flex items-center gap-1.5">
+                <div className="typing-dots flex gap-1">
+                  <span />
+                  <span />
+                  <span />
+                </div>
               </div>
+              <p className="text-[10px] font-black uppercase tracking-widest text-white/20 mt-2">
+                Querying intelligence network...
+              </p>
             </div>
           </div>
         )}

@@ -1,6 +1,6 @@
 # GRAIL HUNTER — AI-Powered Vintage Authentication Scanner
 
-**Gemini 3 API Hackathon Submission** | [Live Demo](https://grail-hunter-lite-claremont2542-2062s-projects.vercel.app)
+**Gemini 3 API Hackathon Submission** | [Live Demo](https://grail-hunter-lite.vercel.app)
 
 Grail Hunter is a forensic authentication tool for vintage fashion. Point your camera at any thrift store find — the AI identifies the item, dates it using label forensics, estimates market value, and delivers a full authentication verdict with reasoning chain.
 

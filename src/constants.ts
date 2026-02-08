@@ -12,7 +12,7 @@ export const SAMPLE_ITEMS: GrailItem[] = [
     category: 'Vintage',
     estimatedValue: 1850,
     rarity: 'Grail' as unknown as GrailRarity,
-    imageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&h=500&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400&h=500&fit=crop',
     description: 'Original 1970s silk caftan',
     year: 1974,
     isAuthentic: true,
