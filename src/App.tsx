@@ -17,6 +17,7 @@ import { BadgeUnlock } from './components/BadgeUnlock';
 import { BadgeGallery } from './components/BadgeGallery';
 import { InstallBanner } from './components/InstallBanner';
 import { ScanStats } from './components/ScanStats';
+import { ParticleField } from './components/ParticleField';
 import { useScanHistory } from './hooks/useScanHistory';
 import { useFavorites } from './hooks/useFavorites';
 import { useBadges } from './hooks/useBadges';
@@ -80,6 +81,7 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#0A0A0F] text-white pb-24">
+      <ParticleField />
       <ToastOverlay />
       <InstallBanner />
 

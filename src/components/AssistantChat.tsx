@@ -119,7 +119,7 @@ export const AssistantChat: React.FC = () => {
           </div>
         )}
         {messages.map((m) => (
-          <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+          <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'} ${m.role === 'user' ? 'msg-slide-right' : 'msg-slide-left'}`}>
             <div
               className={`max-w-[80%] p-4 rounded-2xl text-sm ${m.role === 'user' ? 'bg-[#2BF3C0]/20 text-[#2BF3C0]' : 'bg-white/5 text-white/80'}`}
             >

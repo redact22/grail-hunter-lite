@@ -201,6 +201,92 @@ input[type='range']::-moz-range-thumb {
   animation-delay: 420ms;
 }
 
+/* Holographic shine sweep on hover */
+@keyframes holoSweep {
+  0% { transform: translateX(-100%) rotate(25deg); }
+  100% { transform: translateX(200%) rotate(25deg); }
+}
+.holo-card {
+  overflow: hidden;
+}
+.holo-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(43, 243, 192, 0.06) 45%,
+    rgba(155, 123, 255, 0.08) 50%,
+    rgba(255, 59, 212, 0.06) 55%,
+    transparent 60%
+  );
+  transform: translateX(-100%) rotate(25deg);
+  pointer-events: none;
+  z-index: 1;
+}
+.holo-card:hover::after {
+  animation: holoSweep 0.8s ease-out forwards;
+}
+
+/* Chat message slide animations */
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.msg-slide-left {
+  animation: slideInLeft 0.35s ease-out;
+}
+.msg-slide-right {
+  animation: slideInRight 0.35s ease-out;
+}
+
+/* Radar scan loading for NearbyStores */
+@keyframes radarSweep {
+  0% { transform: scale(0.3); opacity: 0.8; }
+  100% { transform: scale(1.2); opacity: 0; }
+}
+.radar-ring {
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(43, 243, 192, 0.3);
+  border-radius: 50%;
+  animation: radarSweep 2s ease-out infinite;
+}
+.radar-ring:nth-child(2) { animation-delay: 0.7s; }
+.radar-ring:nth-child(3) { animation-delay: 1.4s; }
+
+/* Price flash on tick */
+@keyframes priceFlash {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+.price-flash {
+  animation: priceFlash 0.4s ease-out;
+}
+
+/* Animated gradient border for scanning */
+@keyframes borderGlow {
+  0% { border-color: rgba(43, 243, 192, 0.6); box-shadow: 0 0 20px rgba(43, 243, 192, 0.2); }
+  33% { border-color: rgba(155, 123, 255, 0.6); box-shadow: 0 0 20px rgba(155, 123, 255, 0.2); }
+  66% { border-color: rgba(255, 59, 212, 0.6); box-shadow: 0 0 20px rgba(255, 59, 212, 0.2); }
+  100% { border-color: rgba(43, 243, 192, 0.6); box-shadow: 0 0 20px rgba(43, 243, 192, 0.2); }
+}
+.scan-border-glow {
+  animation: borderGlow 3s linear infinite;
+}
+
+/* Ticker glow pulse on data refresh */
+@keyframes tickerPulse {
+  0% { background-color: rgba(43, 243, 192, 0.05); }
+  100% { background-color: transparent; }
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,

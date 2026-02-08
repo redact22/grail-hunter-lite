@@ -148,7 +148,7 @@ export const Scanner: React.FC<ScannerProps> = ({ onResult }) => {
   return (
     <div className="max-w-lg mx-auto space-y-6">
       <div
-        className={`relative aspect-[4/5] rounded-[48px] overflow-hidden border bg-black flex items-center justify-center transition-all duration-500 ${scanning ? 'border-[#2BF3C0]/40 shadow-[0_0_60px_rgba(43,243,192,0.15),0_40px_100px_rgba(0,0,0,0.6)]' : 'border-white/10 shadow-[0_40px_100px_rgba(0,0,0,0.6)]'}`}
+        className={`relative aspect-[4/5] rounded-[48px] overflow-hidden border-2 bg-black flex items-center justify-center transition-all duration-500 ${scanning ? 'scan-border-glow shadow-[0_0_60px_rgba(43,243,192,0.15),0_40px_100px_rgba(0,0,0,0.6)]' : 'border-white/10 shadow-[0_40px_100px_rgba(0,0,0,0.6)]'}`}
       >
         <canvas ref={canvasRef} className="hidden" />
 

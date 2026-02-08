@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Heart, TrendingUp, TrendingDown, ShieldCheck } from 'lucide-react';
 import { rarityColors } from '../constants';
 import type { GrailItem } from '../types';
@@ -23,22 +23,40 @@ export const ListingCard: React.FC<ListingCardProps> = ({
   const [localFav, setLocalFav] = useState(false);
   const isFav = isFavorite ?? localFav;
   const [livePrice, setLivePrice] = useState(item.estimatedValue);
+  const [priceFlash, setPriceFlash] = useState(false);
   const [initialPrice] = useState(item.estimatedValue);
   const [imgSrc, setImgSrc] = useState(item.imageUrl);
   const handleImgError = useCallback(() => setImgSrc(fallbackImage(item.brand)), [item.brand]);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setLivePrice((prev) => Math.round(prev * (1 + (Math.random() - 0.5) * 0.006)));
+      setLivePrice((prev) => {
+        const next = Math.round(prev * (1 + (Math.random() - 0.5) * 0.006));
+        if (next !== prev) { setPriceFlash(true); setTimeout(() => setPriceFlash(false), 400); }
+        return next;
+      });
     }, 4500);
     return () => clearInterval(interval);
   }, []);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    const el = cardRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = ((e.clientY - rect.top) / rect.height - 0.5) * -8;
+    const y = ((e.clientX - rect.left) / rect.width - 0.5) * 8;
+    setTilt({ x, y });
+  }, []);
+  const handleMouseLeave = useCallback(() => setTilt({ x: 0, y: 0 }), []);
 
   const trend = ((livePrice - initialPrice) / initialPrice) * 100;
   const style = rarityColors[item.rarity as string] || rarityColors.Common;
 
   return (
     <div
+      ref={cardRef}
       role="button"
       tabIndex={0}
       onClick={() => onSelect({ ...item, estimatedValue: livePrice })}
@@ -48,7 +66,14 @@ export const ListingCard: React.FC<ListingCardProps> = ({
           onSelect({ ...item, estimatedValue: livePrice });
         }
       }}
-      className={`relative rounded-3xl overflow-hidden bg-white/[0.02] border border-white/[0.08] cursor-pointer group transition-all duration-300 ${style.glow} hover:bg-white/[0.08] hover:border-white/20 hover:shadow-[0_8px_32px_rgba(43,243,192,0.08)] active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:outline-offset-2`}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        perspective: '600px',
+        transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+        transition: 'transform 0.15s ease-out',
+      }}
+      className={`relative holo-card rounded-3xl overflow-hidden bg-white/[0.02] border border-white/[0.08] cursor-pointer group transition-all duration-300 ${style.glow} hover:bg-white/[0.08] hover:border-white/20 hover:shadow-[0_8px_32px_rgba(43,243,192,0.08)] active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2BF3C0] focus-visible:outline-offset-2`}
     >
       <div className="relative aspect-[4/5] overflow-hidden">
         <img
@@ -100,7 +125,7 @@ export const ListingCard: React.FC<ListingCardProps> = ({
           {item.name}
         </h3>
         <div className="flex items-center justify-between">
-          <span className="text-lg font-black text-white font-mono">
+          <span className={`text-lg font-black text-white font-mono ${priceFlash ? 'price-flash' : ''}`}>
             ${livePrice.toLocaleString()}
           </span>
           <div
