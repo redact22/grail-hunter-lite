@@ -11,7 +11,7 @@ import type { IdentificationResult, GroundingLink, NearbyStore, GrailItem } from
 
 /* ─── API health tracking ─── */
 
-let _lastApiSuccess = false;
+let _lastApiSuccess = true;
 
 /** Returns true if the last API call succeeded (real Gemini data) */
 export const isConfigured = (): boolean => _lastApiSuccess;
