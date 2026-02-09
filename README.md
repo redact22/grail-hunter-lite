@@ -1,18 +1,20 @@
 # GRAIL HUNTER — AI-Powered Vintage Authentication Scanner
 
-**Gemini 3 API Hackathon Submission** | [Live Demo](https://grail-hunter-lite-claremont2542-2062s-projects.vercel.app)
+**Gemini 3 API Hackathon Submission** | [Live Demo](https://grail-hunter-lite-claremont2542-2062s-projects.vercel.app) | [DevPost](https://devpost.com/software/thrift-finds-ai-forensic-authentication-system)
 
 Grail Hunter is a forensic authentication tool for vintage fashion. Point your camera at any thrift store find — the AI identifies the item, dates it using label forensics, estimates market value, and delivers a full authentication verdict with reasoning chain.
 
-## 5 Gemini APIs
+## 5 Gemini API Surfaces
 
-| API | Model | What It Does |
-|-----|-------|-------------|
-| **Vision + Structured Output** | `gemini-3-flash-preview` | Analyzes garment images with extended thinking, returns structured forensic report |
-| **Search Grounding** | `gemini-3-flash-preview` | Real-time market intelligence backed by Google Search |
-| **Maps Grounding** | `gemini-2.5-flash` | Discovers nearby vintage stores using location-aware search |
-| **Text-to-Speech** | `gemini-2.5-flash-preview-tts` | Audio briefings of authentication results (Kore voice) |
-| **Veo 3.1** | `veo-3.1-fast-generate-preview` | Generates cinematic product reels for social sharing |
+All Gemini calls route through secure serverless functions — zero API keys in the client bundle.
+
+| API Surface | Model | Serverless Route | What It Does |
+|-------------|-------|-----------------|-------------|
+| **Vision** (multimodal) | `gemini-3-flash-preview` | `/api/scan` | Analyzes garment images with inline base64 data |
+| **Extended Thinking** | `gemini-3-flash-preview` | `/api/scan` | Deep forensic reasoning with `thinkingLevel: HIGH` |
+| **Structured Output** | `gemini-3-flash-preview` | `/api/scan`, `/api/styling` | Enforced JSON schema responses |
+| **Search Grounding** | `gemini-3-flash-preview` | `/api/assistant` | Real-time market intelligence backed by Google Search |
+| **Maps Grounding** | `gemini-2.5-flash` | `/api/stores` | Discovers nearby vintage stores using location-aware search |
 
 ## Features
 
@@ -23,17 +25,26 @@ Grail Hunter is a forensic authentication tool for vintage fashion. Point your c
 - **Market Ticker** — Live trending items with price movements
 - **Intel Chat** — Search-grounded Q&A about vintage fashion markets
 - **Nearby Stores** — Maps-grounded vintage store discovery
+- **Live/Simulation Badge** — Dynamic indicator showing whether real Gemini AI or fallback data is active
 - **Cinematic Splash** — Boot sequence with forensic terminal aesthetic
-- **Simulation Fallback** — Every API gracefully degrades when no key is set
+- **Audio Briefings** — Browser SpeechSynthesis for hands-free scan results
+
+## Security
+
+- **Zero client-side API keys** — All `@google/genai` imports removed from client code; tree-shaking eliminates the SDK from the bundle
+- **Origin validation** — `checkOrigin()` on every serverless function blocks cross-origin requests
+- **Rate limiting** — Per-IP, per-route, 10 requests/minute window
+- **Input validation** — Image size limit (4.5MB), prompt length limit (4000 chars), required field checks
+- **Error sanitization** — Server errors return generic messages, never internal details
 
 ## Tech Stack
 
 - **React 19** + TypeScript (strict mode)
-- **Vite 5** — build tool
+- **Vite** — build tool
 - **Tailwind CSS 3.4** — utility-first styling
-- **@google/genai** — Gemini SDK
+- **Vercel** — serverless functions + static hosting
 - **Lucide React** — icons
-- **Zero runtime dependencies** beyond React + Gemini SDK
+- **Vitest** + React Testing Library — 77 tests across 13 files
 
 ## Quick Start
 
@@ -41,11 +52,11 @@ Grail Hunter is a forensic authentication tool for vintage fashion. Point your c
 # Install
 npm install
 
-# Set your Gemini API key
-echo "VITE_GEMINI_API_KEY=your-key-here" > .env
+# Set your Gemini API key (server-side only)
+echo "GEMINI_API_KEY=your-key-here" > .env
 
-# Run development server
-npm run dev
+# Run with serverless functions locally
+npx vercel dev
 
 # Run tests (77 tests across 13 files)
 npm test
@@ -71,7 +82,7 @@ src/
 │   ├── MarketTicker.tsx         # Live market price ticker
 │   └── ...
 ├── services/
-│   └── geminiService.ts # All 5 Gemini API integrations (425 lines)
+│   └── geminiService.ts # API proxy client (routes to /api/* serverless functions)
 ├── data/
 │   ├── rn-database.ts   # 18-brand RN lookup database
 │   ├── rn-dating.ts     # FTC dating formula + analysis
@@ -79,6 +90,12 @@ src/
 ├── hooks/               # useScanHistory, useFavorites, useBadges
 ├── lib/                 # Safe localStorage + ErrorBoundary
 └── styles/              # CSS animations + Liquid Obsidian design system
+api/
+├── scan.ts              # POST /api/scan — Gemini Vision + Extended Thinking
+├── assistant.ts         # POST /api/assistant — Search-grounded Q&A
+├── styling.ts           # POST /api/styling — Structured styling advice
+├── stores.ts            # POST /api/stores — Maps-grounded store discovery
+└── _rateLimit.ts        # Shared rate limiting + origin validation
 ```
 
 ## Design System: Liquid Obsidian
@@ -94,19 +111,9 @@ Optimized for low-light thrift store environments:
 
 This repository is standalone and **must not** use monorepo-only aliases.
 
-- ✅ Use relative or local standalone-safe imports (for example: `./lib/safe-storage`, `../lib/safe-storage`, or `@/` only if locally configured).
-- ❌ Do not import from `@mini-apps/*` (these aliases only exist in internal monorepos and will break CI/builds here).
+- Use relative or local standalone-safe imports (for example: `./lib/safe-storage`, `../lib/safe-storage`, or `@/` only if locally configured).
+- Do not import from `@mini-apps/*` (these aliases only exist in internal monorepos and will break CI/builds here).
 - Run `npm run check:imports` before opening a PR.
-
-Example:
-
-```ts
-// Good (standalone-safe)
-import { safeStorage } from './lib/safe-storage';
-
-// Bad (monorepo-only alias)
-import { safeStorage } from '@mini-apps/shared/safe-storage';
-```
 
 ## License
 

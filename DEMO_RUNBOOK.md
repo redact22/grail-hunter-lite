@@ -2,13 +2,14 @@
 
 ## Pre-Demo Checklist
 
+- [ ] **RECORD ON DESKTOP** (mobile scanner has a known base64 conversion bug — falls to simulation)
 - [ ] Clear localStorage (DevTools > Application > Clear Site Data) for fresh badges
-- [ ] Have 3 demo images ready in phone gallery or Downloads folder:
-  1. **Authentic vintage** — Carhartt jacket or Halston caftan (triggers high confidence)
+- [ ] Have 2-3 demo images ready in Downloads folder:
+  1. **Authentic vintage** — BAPE Apestar or Carhartt jacket (triggers high confidence, "Grail" tier)
   2. **Modern reproduction** — Fast fashion knockoff (triggers red flags)
-  3. **Grail-tier** — Rare designer piece (triggers "GRAIL FOUND" verdict)
-- [ ] Phone: camera permissions pre-granted (avoid first-run prompt during demo)
-- [ ] Laptop fallback: use "Upload Evidence" if camera isn't available
+  3. Optional: another brand for variety
+- [ ] Verify "Live" badge shows (top-right) — confirms real Gemini AI is active
+- [ ] Test one scan before recording to warm up the connection
 - [ ] Tab: start on SCAN tab (default)
 
 ---
@@ -84,7 +85,7 @@
 
 ### 2:50–3:00 — CLOSE: The Pitch
 
-**Say:** _"Five Gemini APIs — Vision, Search grounding, Maps grounding, TTS, and Veo. One app. Built for the thrift economy."_
+**Say:** _"Five Gemini API surfaces — Vision, Extended Thinking, Structured Output, Search Grounding, Maps Grounding. Secure serverless architecture with zero client-side keys. Built for the thrift economy."_
 
 ---
 
@@ -99,7 +100,7 @@
 | Forensic Expert | Complete 10 scans            | After 10th scan                      |
 | Authenticator   | 5 authentic items            | After 5th authentic scan             |
 
-## API Showcase Mapping
+## API Showcase Mapping (5 Gemini API Surfaces)
 
 | Gemini API            | Where It Shows            | Demo Moment                      |
 | --------------------- | ------------------------- | -------------------------------- |
@@ -108,8 +109,8 @@
 | **Structured Output** | Parsed result fields      | Confidence ring + red flags      |
 | **Search Grounding**  | Intel tab chat            | Ask market question              |
 | **Maps Grounding**    | Map tab store pins        | Show nearby stores               |
-| **TTS**               | Audio briefing button     | "Audio Brief" in report          |
-| **Veo 3.1**           | Video generation          | DetailModal video (if generated) |
+
+**Bonus (non-Gemini):** Browser SpeechSynthesis for audio briefings (Audio Brief button in report).
 
 ## Emergency Fallbacks
 
@@ -125,5 +126,6 @@
 
 - _"The RN dating formula is a real forensic technique — it's not AI-generated, it's textile science."_
 - _"Extended thinking means the model shows its work — judges can see the reasoning, not just the answer."_
-- _"Five APIs, zero page reloads. It's a single-page app with 341KB bundle."_
+- _"Five API surfaces, zero client-side keys. Every Gemini call routes through secure serverless functions with origin validation and rate limiting."_
 - _"The gamification layer creates stickiness — users come back to unlock badges and track their scan history."_
+- _"77 automated tests, TypeScript strict mode, zero secrets in the bundle — production-grade, not a hackathon prototype."_
