@@ -6,12 +6,14 @@
  * Returns: Array<{ name: string, address: string, uri: string }>
  */
 import { GoogleGenAI } from '@google/genai';
-import { rateLimit, getClientIp } from './_rateLimit.js';
+import { rateLimit, getClientIp, checkOrigin } from './_rateLimit.js';
 
 export default async function handler(req: any, res: any) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
+
+  if (!checkOrigin(req, res)) return;
 
   const { allowed, remaining, resetMs } = rateLimit(getClientIp(req), '/api/stores');
   if (!allowed) {
@@ -62,6 +64,6 @@ export default async function handler(req: any, res: any) {
     );
   } catch (err: any) {
     console.error('[/api/stores] Error:', err?.message || err);
-    return res.status(200).json([{ name: 'Vintage Vault', address: '123 Broadway', uri: '#' }]);
+    return res.status(500).json({ error: 'Store lookup failed' });
   }
 }

@@ -1,5 +1,5 @@
 /**
- * Simple in-memory rate limiter for serverless API routes.
+ * Simple in-memory rate limiter + origin guard for serverless API routes.
  * Tracks requests per IP with a sliding window.
  *
  * Note: In-memory state resets on cold starts, which is acceptable
@@ -16,6 +16,37 @@ const MAX_REQUESTS: Record<string, number> = {
   '/api/styling': 20,    // 20 styling requests/min
 };
 const DEFAULT_MAX = 30;
+
+/** Allowed origins — production Vercel URLs + localhost dev */
+const ALLOWED_ORIGINS = [
+  'https://grail-hunter-lite.vercel.app',
+  'https://grail-hunter-lite-claremont2542-2062s-projects.vercel.app',
+  /^https:\/\/grail-hunter-lite-[\w-]+-claremont2542-2062s-projects\.vercel\.app$/,
+  /^http:\/\/localhost:\d+$/,
+];
+
+/** Check if the request origin is allowed */
+export function checkOrigin(
+  req: { headers: Record<string, string | string[] | undefined> },
+  res: { setHeader: (key: string, value: string) => void; status: (code: number) => { json: (body: unknown) => unknown } }
+): boolean {
+  const origin = (req.headers['origin'] ?? '') as string;
+
+  // No origin header = same-origin request or non-browser client (curl) — allow
+  if (!origin) return true;
+
+  const allowed = ALLOWED_ORIGINS.some((o) =>
+    typeof o === 'string' ? o === origin : o.test(origin)
+  );
+
+  if (!allowed) {
+    res.status(403).json({ error: 'Forbidden' });
+    return false;
+  }
+
+  res.setHeader('Access-Control-Allow-Origin', origin);
+  return true;
+}
 
 export function rateLimit(
   ip: string,

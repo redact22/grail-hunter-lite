@@ -6,7 +6,7 @@
  * Returns: { text: string, links: Array<{ title: string, uri: string }> }
  */
 import { GoogleGenAI } from '@google/genai';
-import { rateLimit, getClientIp } from './_rateLimit.js';
+import { rateLimit, getClientIp, checkOrigin } from './_rateLimit.js';
 
 const CHAT_MODEL = 'gemini-3-flash-preview';
 
@@ -14,6 +14,8 @@ export default async function handler(req: any, res: any) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
+
+  if (!checkOrigin(req, res)) return;
 
   const { allowed, remaining, resetMs } = rateLimit(getClientIp(req), '/api/assistant');
   if (!allowed) {

@@ -9,10 +9,17 @@
  */
 import type { IdentificationResult, GroundingLink, NearbyStore, GrailItem } from '../types';
 
+/* ─── API health tracking ─── */
+
+let _lastApiSuccess = false;
+
+/** Returns true if the last API call succeeded (real Gemini data) */
+export const isConfigured = (): boolean => _lastApiSuccess;
+
 /* ─── Simulation data ─── */
 
 const SIMULATED_SCAN: IdentificationResult = {
-  name: 'Vintage Halston Caftan c. 1973',
+  name: '[SIM] Vintage Halston Caftan c. 1973',
   brand: 'Halston',
   category: 'Vintage',
   rarity: 'Grail',
@@ -20,6 +27,7 @@ const SIMULATED_SCAN: IdentificationResult = {
   confidence: 0.96,
   estimatedValue: '$1,850–$2,400',
   reasoningChain:
+    '⚠️ SIMULATION MODE — API unavailable. Showing sample data.\n\n' +
     'Phase 1: Visual Thought Signature — Hand-rolled hems with 12 SPI chain stitch detected. Selvage edges intact, indicating pre-industrial cut. Fabric drape consistent with single-ply charmeuse silk (19mm weight). ' +
     'Phase 2: Taxonomy Analysis — Label typography matches Halston 1971-1976 mainline. RN# 42850 cross-referenced against FTC database: registered to Halston Enterprises Inc., active 1968-1990. Union label ILGWU present (pre-1995). ' +
     "Phase 3: Market Delta — Comparable sales: Christie's 2024 lot #447 ($2,100), Grailed #HLS-9927 ($1,650 NWOT), The RealReal avg caftan price $890. This specimen rates 95th percentile due to museum-grade condition and provenance markers. " +
@@ -36,7 +44,7 @@ const SIMULATED_SCAN: IdentificationResult = {
 };
 
 const SIMULATED_STYLING = {
-  advice: 'Style with confidence and authenticity.',
+  advice: 'Style with confidence and authenticity. (Simulation mode — API unavailable)',
   pairings: ['Classic denim', 'Vintage sneakers', 'Minimal accessories'],
   occasions: ['Casual outings', 'Street style events', 'Gallery openings'],
 };
@@ -59,6 +67,7 @@ async function apiPost<T>(endpoint: string, body: Record<string, unknown>): Prom
     const err = await res.json().catch(() => ({ error: 'Unknown error' }));
     throw new Error(err.error || `API ${res.status}`);
   }
+  _lastApiSuccess = true;
   return res.json();
 }
 
@@ -70,12 +79,18 @@ function validateScanResult(data: unknown): IdentificationResult {
   if (typeof d.name !== 'string' || !d.name) throw new Error('Missing name');
   if (typeof d.brand !== 'string' || !d.brand) throw new Error('Missing brand');
   if (typeof d.confidence !== 'number') throw new Error('Missing confidence');
+  if (typeof d.isAuthentic !== 'boolean') throw new Error('Missing isAuthentic');
   // Clamp confidence to valid range
   d.confidence = Math.max(0, Math.min(1, d.confidence as number));
   // Ensure arrays default to empty
   if (!Array.isArray(d.redFlags)) d.redFlags = [];
   if (!Array.isArray(d.pairingSuggestions)) d.pairingSuggestions = [];
   if (!Array.isArray(d.occasions)) d.occasions = [];
+  // Default optional strings
+  if (typeof d.era !== 'string') d.era = 'Unknown';
+  if (typeof d.estimatedValue !== 'string') d.estimatedValue = 'N/A';
+  if (typeof d.category !== 'string') d.category = 'Other';
+  if (typeof d.rarity !== 'string') d.rarity = 'Common';
   return d as unknown as IdentificationResult;
 }
 
@@ -87,7 +102,7 @@ export const identifyGrail = async (imageBase64: string): Promise<Identification
     const data = await apiPost<Record<string, unknown>>('/api/scan', { imageBase64 });
     return validateScanResult(data);
   } catch {
-    // Simulation fallback
+    _lastApiSuccess = false;
     await new Promise((r) => setTimeout(r, 2500));
     return SIMULATED_SCAN;
   }
@@ -100,6 +115,7 @@ export const generateStylingAdvice = async (
   try {
     return await apiPost('/api/styling', { brand: item.brand, name: item.name, year: item.year });
   } catch {
+    _lastApiSuccess = false;
     return SIMULATED_STYLING;
   }
 };
@@ -129,8 +145,9 @@ export const askAssistant = async (
   try {
     return await apiPost('/api/assistant', { prompt });
   } catch {
+    _lastApiSuccess = false;
     return {
-      text: 'Market intelligence running in simulation mode. Configure API key for live data.',
+      text: 'Market intelligence running in simulation mode. API connection unavailable.',
       links: [],
     };
   }
@@ -141,13 +158,7 @@ export const findNearbyDrops = async (lat: number, lng: number): Promise<NearbyS
   try {
     return await apiPost('/api/stores', { lat, lng });
   } catch {
+    _lastApiSuccess = false;
     return SIMULATED_STORES;
   }
-};
-
-/** Check if the server-side API is available by pinging /api/scan */
-export const isConfigured = (): boolean => {
-  // In production with serverless functions, always show "Live"
-  // The actual API key check happens server-side in /api/* routes
-  return true;
 };
