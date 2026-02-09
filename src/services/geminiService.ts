@@ -22,6 +22,15 @@ const getClient = () => {
   return new GoogleGenAI({ apiKey });
 };
 
+/* ─── Shared AudioContext for TTS (reuse to avoid Chrome 6-context limit) ─── */
+
+let ttsAudioCtx: AudioContext | null = null;
+const getTtsCtx = (): AudioContext => {
+  if (!ttsAudioCtx) ttsAudioCtx = new AudioContext();
+  if (ttsAudioCtx.state === 'suspended') ttsAudioCtx.resume();
+  return ttsAudioCtx;
+};
+
 /* ─── Shared constants ─── */
 
 const VISION_MODEL = 'gemini-3-flash-preview';
@@ -91,6 +100,23 @@ const STYLING_SCHEMA: Schema = {
   },
   required: ['advice', 'pairings', 'occasions'],
 };
+
+/* ─── Response validation ─── */
+
+function validateScanResult(data: unknown): IdentificationResult {
+  if (!data || typeof data !== 'object') throw new Error('Invalid scan response');
+  const d = data as Record<string, unknown>;
+  if (typeof d.name !== 'string' || !d.name) throw new Error('Missing name');
+  if (typeof d.brand !== 'string' || !d.brand) throw new Error('Missing brand');
+  if (typeof d.confidence !== 'number') throw new Error('Missing confidence');
+  // Clamp confidence to valid range
+  d.confidence = Math.max(0, Math.min(1, d.confidence as number));
+  // Ensure arrays default to empty
+  if (!Array.isArray(d.redFlags)) d.redFlags = [];
+  if (!Array.isArray(d.pairingSuggestions)) d.pairingSuggestions = [];
+  if (!Array.isArray(d.occasions)) d.occasions = [];
+  return d as unknown as IdentificationResult;
+}
 
 /* ─── Simulation data ─── */
 
@@ -202,7 +228,7 @@ Analyze this vintage/thrift item image thoroughly.`,
           /* keep as-is */
         }
       }
-      return parsed as IdentificationResult;
+      return validateScanResult(parsed);
     } catch (err) {
       if (import.meta.env.DEV) console.warn('[GeminiService] Direct scan error:', err);
       return {
@@ -279,13 +305,12 @@ export const generateStylingAudio = async (text: string): Promise<string> => {
       const audioData = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
       if (audioData) {
         const audioBytes = Uint8Array.from(atob(audioData), (c) => c.charCodeAt(0));
-        const audioCtx = new AudioContext();
-        const audioBuffer = await audioCtx.decodeAudioData(audioBytes.buffer);
+        const audioCtx = getTtsCtx();
+        const audioBuffer = await audioCtx.decodeAudioData(audioBytes.buffer.slice(0));
         const source = audioCtx.createBufferSource();
         source.buffer = audioBuffer;
         source.connect(audioCtx.destination);
         source.start();
-        source.onended = () => audioCtx.close().catch(() => {});
         return 'gemini-tts';
       }
     } catch {

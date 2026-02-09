@@ -7,6 +7,7 @@
  */
 import { GoogleGenAI, Type } from '@google/genai';
 import type { Schema } from '@google/genai';
+import { rateLimit, getClientIp } from './_rateLimit';
 
 const CHAT_MODEL = 'gemini-3-flash-preview';
 
@@ -24,6 +25,12 @@ export default async function handler(req: any, res: any) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
+
+  const { allowed, remaining, resetMs } = rateLimit(getClientIp(req), '/api/styling');
+  if (!allowed) {
+    return res.status(429).json({ error: `Rate limited. Try again in ${Math.ceil(resetMs / 1000)}s` });
+  }
+  res.setHeader('X-RateLimit-Remaining', remaining);
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
