@@ -12,6 +12,31 @@ export interface ScannerProps {
   onResult: (r: IdentificationResult) => void;
 }
 
+const MAX_DIMENSION = 1024;
+const JPEG_QUALITY = 0.85;
+
+/** Resize a data URL image to fit within MAX_DIMENSION, returns JPEG data URL */
+const resizeImage = (dataUrl: string): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, MAX_DIMENSION / Math.max(img.width, img.height));
+      if (scale === 1) {
+        resolve(dataUrl);
+        return;
+      }
+      const c = document.createElement('canvas');
+      c.width = Math.round(img.width * scale);
+      c.height = Math.round(img.height * scale);
+      const ctx = c.getContext('2d');
+      if (!ctx) { resolve(dataUrl); return; }
+      ctx.drawImage(img, 0, 0, c.width, c.height);
+      resolve(c.toDataURL('image/jpeg', JPEG_QUALITY));
+    };
+    img.onerror = () => reject(new Error('Failed to load image'));
+    img.src = dataUrl;
+  });
+
 export const Scanner: React.FC<ScannerProps> = ({ onResult }) => {
   const [scanning, setScanning] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
@@ -93,11 +118,17 @@ export const Scanner: React.FC<ScannerProps> = ({ onResult }) => {
       return;
     }
     const reader = new FileReader();
-    reader.onloadend = () => {
-      const b64 = reader.result as string;
-      setPreview(b64);
-      setCameraMode(false);
-      doScan(b64);
+    reader.onloadend = async () => {
+      const raw = reader.result;
+      if (typeof raw !== 'string') return;
+      try {
+        const b64 = await resizeImage(raw);
+        setPreview(b64);
+        setCameraMode(false);
+        doScan(b64);
+      } catch {
+        emitToastShow({ variant: 'error', title: 'Invalid Image', message: 'Could not process this image file.' });
+      }
     };
     reader.readAsDataURL(file);
   };
@@ -127,11 +158,29 @@ export const Scanner: React.FC<ScannerProps> = ({ onResult }) => {
 
   const captureFrame = () => {
     if (!videoRef.current || !canvasRef.current) return;
+    const video = videoRef.current;
+
+    // Guard: video must have valid dimensions (not ready on slow mobile init)
+    if (video.videoWidth === 0 || video.videoHeight === 0) {
+      emitToastShow({
+        variant: 'error',
+        title: 'Camera Not Ready',
+        message: 'Wait a moment for the camera to initialize.',
+      });
+      return;
+    }
+
     const canvas = canvasRef.current;
-    canvas.width = videoRef.current.videoWidth;
-    canvas.height = videoRef.current.videoHeight;
-    canvas.getContext('2d')?.drawImage(videoRef.current, 0, 0);
-    const b64 = canvas.toDataURL('image/jpeg');
+    // Scale down to MAX_DIMENSION for mobile compatibility + smaller payload
+    const scale = Math.min(1, MAX_DIMENSION / Math.max(video.videoWidth, video.videoHeight));
+    canvas.width = Math.round(video.videoWidth * scale);
+    canvas.height = Math.round(video.videoHeight * scale);
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    const b64 = canvas.toDataURL('image/jpeg', JPEG_QUALITY);
     setPreview(b64);
     setCameraMode(false);
     streamRef.current?.getTracks().forEach((t) => t.stop());
