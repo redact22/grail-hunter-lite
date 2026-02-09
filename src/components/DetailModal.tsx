@@ -74,7 +74,7 @@ export const DetailModal: React.FC<DetailModalProps> = ({ item, onClose }) => {
         cancelled = true;
       };
     }
-  }, [item?.id]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [item]);
 
   // Escape to close
   useEffect(() => {
@@ -386,6 +386,7 @@ export const DetailModal: React.FC<DetailModalProps> = ({ item, onClose }) => {
             <button
               onClick={handleAudio}
               disabled={isPlayingAudio}
+              aria-label="Play audio briefing"
               className="hv-btn py-4 px-4 min-h-[52px] min-w-[52px] bg-[#2BF3C0]/10 border border-[#2BF3C0]/30 text-[#2BF3C0] font-black uppercase rounded-2xl flex items-center justify-center disabled:opacity-50"
             >
               {isPlayingAudio ? (

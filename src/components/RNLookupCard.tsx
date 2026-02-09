@@ -55,6 +55,7 @@ export const RNLookupCard: React.FC = () => {
         />
         <button
           onClick={handleLookup}
+          aria-label="Lookup RN number"
           className="hv-btn px-5 py-3 rounded-xl bg-[#2BF3C0] text-black font-black text-xs uppercase tracking-widest active:scale-95"
         >
           <Search size={16} />

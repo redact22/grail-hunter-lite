@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 
 interface ScannerHUDProps {
   progress: number;
@@ -6,21 +6,30 @@ interface ScannerHUDProps {
 }
 
 export const ScannerHUD: React.FC<ScannerHUDProps> = ({ progress, phase }) => {
-  const [frameCount, setFrameCount] = useState(0);
-  const [coords, setCoords] = useState({ x: 0, y: 0 });
-  const [patternMatches, setPatternMatches] = useState(0);
+  const frameRef = useRef<HTMLSpanElement>(null);
+  const coordsRef = useRef<HTMLSpanElement>(null);
+  const matchRef = useRef<HTMLSpanElement>(null);
+  const frameCount = useRef(0);
+  const patternMatches = useRef(0);
+
+  const tick = useCallback(() => {
+    frameCount.current += 1;
+    patternMatches.current += Math.floor(Math.random() * 3);
+    const x = Math.floor(Math.random() * 4096);
+    const y = Math.floor(Math.random() * 4096);
+
+    if (frameRef.current)
+      frameRef.current.textContent = `FRM: ${String(frameCount.current).padStart(6, '0')}`;
+    if (coordsRef.current)
+      coordsRef.current.textContent = `[${String(x).padStart(4, '0')}, ${String(y).padStart(4, '0')}]`;
+    if (matchRef.current)
+      matchRef.current.textContent = `MATCH: ${patternMatches.current}`;
+  }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setFrameCount((f) => f + 1);
-      setCoords({
-        x: Math.floor(Math.random() * 4096),
-        y: Math.floor(Math.random() * 4096),
-      });
-      setPatternMatches((p) => p + Math.floor(Math.random() * 3));
-    }, 400);
+    const interval = setInterval(tick, 400);
     return () => clearInterval(interval);
-  }, []);
+  }, [tick]);
 
   const cpuLoad = Math.min(84 + Math.floor(progress * 0.15), 99);
   const memUsage = Math.min(42 + Math.floor(progress * 0.3), 87);
@@ -46,21 +55,21 @@ export const ScannerHUD: React.FC<ScannerHUDProps> = ({ progress, phase }) => {
         <span className="text-[9px] font-black font-mono text-white/30 uppercase">
           MEM: {memUsage}%
         </span>
-        <span className="text-[9px] font-black font-mono text-white/20 uppercase">
-          FRM: {String(frameCount).padStart(6, '0')}
+        <span ref={frameRef} className="text-[9px] font-black font-mono text-white/20 uppercase">
+          FRM: 000000
         </span>
       </div>
 
       {/* Right panel */}
       <div className="flex flex-col gap-0.5 items-end bg-black/40 rounded-lg px-2 py-1.5 backdrop-blur-sm border border-white/5">
-        <span className="text-[9px] font-black font-mono text-[#9B7BFF]/70 uppercase">
-          [{String(coords.x).padStart(4, '0')}, {String(coords.y).padStart(4, '0')}]
+        <span ref={coordsRef} className="text-[9px] font-black font-mono text-[#9B7BFF]/70 uppercase">
+          [0000, 0000]
         </span>
         <span className="text-[9px] font-black font-mono text-[#2BF3C0]/40 uppercase">
           LAYER: {neuralLayer}/12
         </span>
-        <span className="text-[9px] font-black font-mono text-white/20 uppercase">
-          MATCH: {patternMatches}
+        <span ref={matchRef} className="text-[9px] font-black font-mono text-white/20 uppercase">
+          MATCH: 0
         </span>
         <span className="text-[9px] font-black font-mono text-[#FFB020]/60 uppercase tracking-wider">
           {phase}

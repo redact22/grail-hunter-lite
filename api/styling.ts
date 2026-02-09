@@ -7,7 +7,7 @@
  */
 import { GoogleGenAI, Type } from '@google/genai';
 import type { Schema } from '@google/genai';
-import { rateLimit, getClientIp } from './_rateLimit';
+import { rateLimit, getClientIp } from './_rateLimit.js';
 
 const CHAT_MODEL = 'gemini-3-flash-preview';
 

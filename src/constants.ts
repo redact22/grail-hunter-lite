@@ -1,7 +1,8 @@
 /**
  * GRAIL HUNTER LITE — Constants & Utility Functions
  */
-import type { GrailItem, GrailRarity } from './types';
+import { GrailRarity } from './types';
+import type { GrailItem } from './types';
 
 // ─── Sample marketplace data ──────────────────────────────────────────────
 export const SAMPLE_ITEMS: GrailItem[] = [
@@ -11,7 +12,7 @@ export const SAMPLE_ITEMS: GrailItem[] = [
     brand: 'Halston',
     category: 'Vintage',
     estimatedValue: 1850,
-    rarity: 'Grail' as unknown as GrailRarity,
+    rarity: GrailRarity.GRAIL,
     imageUrl: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=500&fit=crop',
     description: 'Original 1970s silk caftan',
     year: 1974,
@@ -24,7 +25,7 @@ export const SAMPLE_ITEMS: GrailItem[] = [
     brand: 'Carhartt',
     category: 'Outerwear',
     estimatedValue: 450,
-    rarity: 'Rare' as unknown as GrailRarity,
+    rarity: GrailRarity.RARE,
     imageUrl: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=500&fit=crop',
     description: 'Blanket-lined Detroit jacket',
     year: 1992,
@@ -37,7 +38,7 @@ export const SAMPLE_ITEMS: GrailItem[] = [
     brand: 'Nike',
     category: 'Footwear',
     estimatedValue: 4200,
-    rarity: 'Grail' as unknown as GrailRarity,
+    rarity: GrailRarity.GRAIL,
     imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=500&fit=crop',
     description: '1985 original pair',
     year: 1985,
@@ -50,7 +51,7 @@ export const SAMPLE_ITEMS: GrailItem[] = [
     brand: "Levi's",
     category: 'Bottoms',
     estimatedValue: 2800,
-    rarity: 'Ultra Rare' as unknown as GrailRarity,
+    rarity: GrailRarity.ULTRA_RARE,
     imageUrl: 'https://images.unsplash.com/photo-1565084888279-aca607ecce0c?w=400&h=500&fit=crop',
     description: 'Pre-1971 Big E selvedge',
     year: 1968,
@@ -63,7 +64,7 @@ export const SAMPLE_ITEMS: GrailItem[] = [
     brand: 'Helmut Lang',
     category: 'Outerwear',
     estimatedValue: 3200,
-    rarity: 'Ultra Rare' as unknown as GrailRarity,
+    rarity: GrailRarity.ULTRA_RARE,
     imageUrl: 'https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=400&h=500&fit=crop',
     description: 'FW98 archive nylon bomber',
     year: 1998,
@@ -76,7 +77,7 @@ export const SAMPLE_ITEMS: GrailItem[] = [
     brand: 'Raf Simons',
     category: 'Outerwear',
     estimatedValue: 8500,
-    rarity: 'Grail' as unknown as GrailRarity,
+    rarity: GrailRarity.GRAIL,
     imageUrl: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&h=500&fit=crop',
     description: 'AW01 Riot Riot Riot collection',
     year: 2001,
@@ -89,7 +90,7 @@ export const SAMPLE_ITEMS: GrailItem[] = [
     brand: 'Hermes',
     category: 'Accessories',
     estimatedValue: 12000,
-    rarity: 'Grail' as unknown as GrailRarity,
+    rarity: GrailRarity.GRAIL,
     imageUrl: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400&h=500&fit=crop',
     description: 'Togo leather, gold hardware',
     year: 2019,
@@ -102,7 +103,7 @@ export const SAMPLE_ITEMS: GrailItem[] = [
     brand: 'Rolex',
     category: 'Accessories',
     estimatedValue: 15000,
-    rarity: 'Grail' as unknown as GrailRarity,
+    rarity: GrailRarity.GRAIL,
     imageUrl: 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=400&h=500&fit=crop',
     description: 'Matte dial no-date Sub',
     year: 1969,

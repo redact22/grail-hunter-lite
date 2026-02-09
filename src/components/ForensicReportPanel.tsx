@@ -35,7 +35,7 @@ export const ForensicReportPanel: React.FC<ForensicReportPanelProps> = ({ result
       cancelAnimationFrame(raf);
       if (confettiTimer) clearTimeout(confettiTimer);
     };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [result]);
 
   const handleShare = useCallback(async () => {
     const text = `${result.isAuthentic ? '✅' : '⚠️'} ${result.name} by ${result.brand} — ${result.era}\nConfidence: ${Math.round(result.confidence * 100)}% | Value: ${result.estimatedValue}\nScanned with Grail Hunter`;

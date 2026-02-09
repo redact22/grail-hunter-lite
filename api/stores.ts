@@ -6,7 +6,7 @@
  * Returns: Array<{ name: string, address: string, uri: string }>
  */
 import { GoogleGenAI } from '@google/genai';
-import { rateLimit, getClientIp } from './_rateLimit';
+import { rateLimit, getClientIp } from './_rateLimit.js';
 
 export default async function handler(req: any, res: any) {
   if (req.method !== 'POST') {

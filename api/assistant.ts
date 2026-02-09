@@ -6,7 +6,7 @@
  * Returns: { text: string, links: Array<{ title: string, uri: string }> }
  */
 import { GoogleGenAI } from '@google/genai';
-import { rateLimit, getClientIp } from './_rateLimit';
+import { rateLimit, getClientIp } from './_rateLimit.js';
 
 const CHAT_MODEL = 'gemini-3-flash-preview';
 
