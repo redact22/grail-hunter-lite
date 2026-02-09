@@ -141,6 +141,28 @@ export const Scanner: React.FC<ScannerProps> = ({ onResult }) => {
       streamRef.current = ms;
       if (videoRef.current) videoRef.current.srcObject = ms;
       setCameraMode(true);
+
+      // First-frame watchdog: if no frames after 5s, suggest Upload instead
+      const video = videoRef.current;
+      if (video) {
+        const watchdog = setTimeout(() => {
+          if (video.videoWidth === 0 || video.videoHeight === 0) {
+            ms.getTracks().forEach((t) => t.stop());
+            streamRef.current = null;
+            video.srcObject = null;
+            setCameraMode(false);
+            emitToastShow({
+              variant: 'error',
+              title: 'No Video Signal',
+              message: 'Camera opened but no frames received. Try "Upload Evidence" instead.',
+            });
+          }
+        }, 5000);
+        // Clear watchdog if component unmounts or camera stops before timeout
+        const origStop = streamRef.current;
+        const onTrackEnded = () => clearTimeout(watchdog);
+        origStop?.getTracks().forEach((t) => t.addEventListener('ended', onTrackEnded, { once: true }));
+      }
     } catch (err) {
       const msg =
         err instanceof DOMException && err.name === 'NotAllowedError'
