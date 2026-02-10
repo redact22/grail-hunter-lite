@@ -48,7 +48,13 @@ const IDENTIFICATION_SCHEMA: Schema = {
     stylingAdvice: { type: Type.STRING },
     pairingSuggestions: { type: Type.ARRAY, items: { type: Type.STRING } },
     occasions: { type: Type.ARRAY, items: { type: Type.STRING } },
-    materialComposition: { type: Type.OBJECT },
+    materialComposition: {
+      type: Type.OBJECT,
+      properties: {
+        primary: { type: Type.STRING, description: 'Primary material and percentage' },
+        secondary: { type: Type.STRING, description: 'Secondary material and percentage' },
+      },
+    },
   },
   required: [
     'name',
@@ -125,7 +131,9 @@ Analyze this vintage/thrift item image thoroughly.`,
     const parsed = JSON.parse(result.text ?? '{}');
     return res.status(200).json(parsed);
   } catch (err: any) {
-    console.error('[/api/scan] Error:', err?.message || err);
-    return res.status(500).json({ error: 'Scan failed' });
+    const msg = err?.message || String(err);
+    console.error('[/api/scan] Error:', msg);
+    console.error('[/api/scan] Stack:', err?.stack);
+    return res.status(500).json({ error: 'Scan failed', detail: msg });
   }
 }

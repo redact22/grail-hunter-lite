@@ -8,7 +8,7 @@ Grail Hunter Lite — AI Vintage Fashion Authentication
 
 ## What it does
 
-Grail Hunter brings forensic-grade authentication to the $350B secondhand fashion market — where a $450B counterfeit industry means every purchase is a gamble.
+Grail Hunter brings forensic-grade authentication to the $350B secondhand fashion market — where a $450B counterfeit industry means every purchase is a gamble. In this decentralized, peer-to-peer ecosystem, information asymmetry is extreme: the value of a vintage garment depends on minute details — specific manufacturer iterations, hardware oxidation, label typography — tribal knowledge held by a small cadre of collectors. Grail Hunter is the technological equalizer.
 
 Point your camera at any thrift store find. The AI runs a 4-phase forensic pipeline — Visual Thought Signature, Taxonomy Classification, Market Delta Analysis, and Authentication Verdict — delivering a structured report with confidence score, era dating, material composition, red flags, and estimated market value.
 
@@ -47,6 +47,8 @@ Every Gemini call routes through secure serverless functions — the API key nev
 
 **Serverless ESM resolution** — Vercel compiles TypeScript to JavaScript but preserves import paths verbatim. With `"type": "module"` in package.json, Node.js strict ESM mode requires explicit `.js` extensions on relative imports. Every serverless function crashed with `ERR_MODULE_NOT_FOUND` until we added the extensions — a subtle deployment bug invisible in local development.
 
+**The Simulation Mode Paradox** — we built a simulation fallback so the UI works without API keys during development. After deploying to Vercel, every scan returned perfect results — a BAPE jacket authenticated at 95% confidence with detailed forensic reasoning. It looked flawless. Then we checked `vercel env ls`: zero environment variables. The app was replaying hardcoded mock data, and the UI was indistinguishable from real AI output. We call this the "Illusion of Competence" — when your fallback data is too good, you can't tell the difference between a working AI and a confident liar. The fix: a dynamic Live/Simulation badge that tracks real API health, plus mandatory `vercel env ls` verification after every deploy.
+
 **Securing the API key** — our initial architecture exposed the Gemini key in the client bundle via Vite's `VITE_` prefix. We refactored all Gemini calls to route through serverless proxy functions, removed the client SDK entirely (tree-shaking eliminated the 200KB+ `@google/genai` package from the bundle), and added origin validation + rate limiting on every route.
 
 ## What we learned
@@ -55,12 +57,15 @@ The "Action Era" for Gemini APIs means going beyond simple prompt-response patte
 
 **Security must be architected, not patched.** Moving from client-side SDK calls to serverless proxy functions wasn't just a security fix — it fundamentally improved the architecture. The client bundle shrank, the API key became invisible, and we gained server-side rate limiting and origin validation for free. The lesson: if your API key is in the bundle, it's already compromised.
 
+**Beware the Illusion of Competence.** The most dangerous bug we shipped wasn't a crash — it was silent success. Our simulation fallback returned perfectly structured JSON that looked identical to real Gemini output. We celebrated "working" scans for an entire session before discovering zero API keys were configured. In AI applications, a correct-looking answer from a mock is indistinguishable from a correct answer from the model. The fix wasn't technical — it was operational: always verify your data source, never trust perfect results, and surface the Live/Simulation distinction prominently in the UI.
+
 ## What's next
 
 - Blockchain-backed provenance certificates linking forensic reports to tamper-proof ownership history
 - Batch scanning for professional resellers processing hundreds of items daily
 - Community-powered authentication where expert thrifters validate and refine AI findings
 - Integration with resale platforms (Depop, Grailed, Poshmark) for one-tap listing with verified authentication
+- Autonomous "Grail Alerts" — set a watch for a specific item under a target price, and an AI agent continuously monitors listings, runs visual authentication, and notifies you when a verified match appears
 - Gemini TTS integration for AI-generated voice briefings (currently using browser SpeechSynthesis)
 
 ## Built with
